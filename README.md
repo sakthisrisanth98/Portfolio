@@ -11,7 +11,6 @@
   <a href="https://www.framer.com/motion/"><img src="https://img.shields.io/badge/Framer_Motion-12-8B5CF6?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" /></a>
 </p>
 
-![Sakthi.dev portfolio preview](public/portfolio-preview.png)
 
 ## Overview
 
