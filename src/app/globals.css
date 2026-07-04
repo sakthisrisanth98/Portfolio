@@ -1,0 +1,911 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050816;
+  --foreground: #f8fafc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 108px;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+button,
+a,
+input,
+textarea {
+  font: inherit;
+}
+
+canvas {
+  max-width: 100%;
+}
+
+.vanta-bird-field {
+  pointer-events: none;
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(100vh, 920px);
+  z-index: 2;
+  overflow: hidden;
+  contain: strict;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+}
+
+/* White-first portfolio system. Dark mode remains available through the header toggle. */
+.portfolio-light {
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --surface-muted: #f3f4f6;
+  --line: #e2e8f0;
+  --ink: #0f172a;
+  --copy: #475569;
+  --muted: #64748b;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.portfolio-light .vanta-stage-light,
+.portfolio-light .space-home-gradient {
+  background:
+    radial-gradient(circle at 78% 16%, rgba(99, 102, 241, 0.08), transparent 24%),
+    radial-gradient(circle at 18% 38%, rgba(14, 165, 233, 0.06), transparent 22%),
+    linear-gradient(180deg, #ffffff 0%, #fbfdff 58%, #ffffff 100%);
+}
+
+.portfolio-light .space-home-dots {
+  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.14) 1.2px, transparent 1.2px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  opacity: 0.52;
+}
+
+.portfolio-light .vanta-stage-light > [class*="blur-3xl"] {
+  opacity: 0.2;
+}
+
+.portfolio-light section {
+  border-color: var(--line) !important;
+}
+
+.portfolio-light section:nth-of-type(even) {
+  background-color: rgba(248, 250, 252, 0.58);
+}
+
+.portfolio-light section [class*="bg-[#"],
+.portfolio-light section [class*="bg-[rgba"],
+.portfolio-light section [class*="bg-[linear-gradient"],
+.portfolio-light section [class*="bg-[radial-gradient"],
+.portfolio-light section [class*="bg-slate-"],
+.portfolio-light section [class*="bg-black"],
+.portfolio-light footer [class*="bg-[#"] {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  background-image: none !important;
+}
+
+.portfolio-light #experience [style*="background"],
+.portfolio-light #certificates [style*="background"],
+.portfolio-light #achievements [style*="background"] {
+  background: rgba(255, 255, 255, 0.96) !important;
+}
+
+.portfolio-light section [class*="border-white"],
+.portfolio-light footer [class*="border-white"] {
+  border-color: #e2e8f0 !important;
+}
+
+.portfolio-light section [class*="text-white"],
+.portfolio-light footer [class*="text-white"] {
+  color: var(--ink) !important;
+}
+
+.portfolio-light section [class*="text-slate-100"],
+.portfolio-light section [class*="text-slate-200"],
+.portfolio-light footer [class*="text-slate-200"] {
+  color: #1e293b !important;
+}
+
+.portfolio-light section [class*="text-slate-300"],
+.portfolio-light footer [class*="text-slate-300"] {
+  color: #334155 !important;
+}
+
+.portfolio-light section [class*="text-slate-400"],
+.portfolio-light footer [class*="text-slate-400"] {
+  color: var(--copy) !important;
+}
+
+.portfolio-light section [class*="text-slate-500"],
+.portfolio-light footer [class*="text-slate-500"] {
+  color: var(--muted) !important;
+}
+
+.portfolio-light h1.text-transparent,
+.portfolio-light h2.text-transparent,
+.portfolio-light h3.text-transparent {
+  background-image: linear-gradient(90deg, #0f172a 0%, #2563eb 55%, #7c3aed 100%) !important;
+}
+
+.portfolio-light section article,
+.portfolio-light section aside,
+.portfolio-light section [class*="shadow-"] {
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.08) !important;
+}
+
+.portfolio-light section article,
+.portfolio-light section aside,
+.portfolio-light section [class*="rounded-[20px]"] {
+  border-color: #e2e8f0;
+}
+
+.portfolio-light #home h1 {
+  color: #0f172a !important;
+  text-shadow: none;
+}
+
+.portfolio-light #home h1 span {
+  background-image: linear-gradient(90deg, #0f172a 0%, #2563eb 52%, #7c3aed 100%) !important;
+}
+
+.portfolio-light #home [class*="bg-gradient-to-br"] {
+  background-image: linear-gradient(135deg, #38bdf8, #6366f1, #a855f7) !important;
+}
+
+.portfolio-light #home a[class*="border-"] {
+  border-color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.88);
+  color: #0f172a !important;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+}
+
+.portfolio-light #summary,
+.portfolio-light #about,
+.portfolio-light #education {
+  background-color: transparent;
+}
+
+.portfolio-light #projects > div,
+.portfolio-light #projects article,
+.portfolio-light #certificates > div,
+.portfolio-light #achievements > div {
+  border-color: #dbe3ef !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 18px 54px rgba(15, 23, 42, 0.08) !important;
+}
+
+.portfolio-light #education article > div.hidden span {
+  border: 0;
+  background: transparent;
+  color: rgba(79, 70, 229, 0.2) !important;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: none !important;
+}
+
+.portfolio-light #education .timeline-card {
+  min-height: 22rem;
+}
+
+.portfolio-light #coursework > div {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding-inline: 0 !important;
+}
+
+.portfolio-light #projects article > div:last-child,
+.portfolio-light #projects article [class*="bg-[rgba"] {
+  background: #ffffff !important;
+}
+
+.portfolio-light #projects [class*="overflow-x-auto"] > div {
+  border-color: #e2e8f0 !important;
+  background: #f8fafc !important;
+}
+
+.portfolio-light #experience [style*="background"],
+.portfolio-light #achievements [style*="background"] {
+  color: #334155 !important;
+}
+
+.portfolio-light #experience a,
+.portfolio-light #experience button,
+.portfolio-light #achievements a,
+.portfolio-light #achievements button {
+  color: #0f172a !important;
+}
+
+.portfolio-light #experience [class*="text-cyan-50"],
+.portfolio-light #experience [class*="text-emerald-50"],
+.portfolio-light #achievements [class*="text-amber-50"] {
+  color: #0f172a !important;
+}
+
+.portfolio-light #summary [class*="bg-[#"],
+.portfolio-light #about [class*="bg-[#"],
+.portfolio-light #education [class*="bg-[#"] {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.portfolio-light .content-sections-shell {
+  background: linear-gradient(180deg, #ffffff, #f8fafc 48%, #ffffff) !important;
+}
+
+.portfolio-light #resume,
+.portfolio-light #contact {
+  background: #ffffff !important;
+}
+
+.portfolio-light #resume input,
+.portfolio-light #contact input,
+.portfolio-light #contact textarea {
+  border-color: #dbe3ef !important;
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.portfolio-light footer {
+  background: #f8fafc !important;
+  color: #334155;
+}
+
+.portfolio-light footer > div:last-of-type {
+  border-color: #dbe3ef !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 18px 54px rgba(15, 23, 42, 0.08) !important;
+}
+
+body.portfolio-light-mode [role="dialog"] {
+  border-color: #dbe3ef !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  color: #0f172a !important;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.18) !important;
+}
+
+body.portfolio-light-mode [role="dialog"] [class*="bg-[#"],
+body.portfolio-light-mode [role="dialog"] [class*="bg-black"],
+body.portfolio-light-mode [role="dialog"] [class*="bg-[rgba"] {
+  border-color: #e2e8f0 !important;
+  background: #f8fafc !important;
+}
+
+body.portfolio-light-mode [role="dialog"] [class*="text-white"],
+body.portfolio-light-mode [role="dialog"] [class*="text-slate-100"],
+body.portfolio-light-mode [role="dialog"] [class*="text-slate-200"] {
+  color: #0f172a !important;
+}
+
+body.portfolio-light-mode [role="dialog"] [class*="text-slate-300"],
+body.portfolio-light-mode [role="dialog"] [class*="text-slate-400"] {
+  color: #475569 !important;
+}
+
+/* Refined light presentation: white-first, with enough depth to avoid a washed-out page. */
+.portfolio-light {
+  background:
+    linear-gradient(rgba(99, 102, 241, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.016) 1px, transparent 1px),
+    #ffffff;
+  background-size: 48px 48px;
+}
+
+.portfolio-light .vanta-stage-light {
+  background:
+    radial-gradient(circle at 78% 12%, rgba(99, 102, 241, 0.13), transparent 27%),
+    radial-gradient(circle at 22% 30%, rgba(14, 165, 233, 0.09), transparent 24%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 48%, #ffffff 100%);
+}
+
+.portfolio-light #home {
+  border-radius: 0 0 2rem 2rem;
+  background:
+    radial-gradient(circle at 78% 42%, rgba(99, 102, 241, 0.11), transparent 27%),
+    radial-gradient(circle at 16% 34%, rgba(14, 165, 233, 0.07), transparent 24%);
+}
+
+.portfolio-light #summary,
+.portfolio-light #education,
+.portfolio-light #projects,
+.portfolio-light #resume {
+  border: 1px solid rgba(203, 213, 225, 0.68);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(99, 102, 241, 0.075), transparent 22%),
+    linear-gradient(145deg, rgba(248, 250, 252, 0.96), rgba(255, 255, 255, 0.98));
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.055);
+}
+
+.portfolio-light #about,
+.portfolio-light #experience,
+.portfolio-light #certificates,
+.portfolio-light #contact {
+  border: 1px solid rgba(219, 227, 239, 0.82);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 8% 88%, rgba(14, 165, 233, 0.06), transparent 23%),
+    linear-gradient(155deg, #ffffff, #fbfdff);
+  box-shadow: 0 22px 64px rgba(15, 23, 42, 0.045);
+}
+
+.portfolio-light #achievements {
+  border: 1px solid rgba(245, 201, 122, 0.42);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(245, 158, 11, 0.075), transparent 24%),
+    linear-gradient(150deg, #fffdf8, #ffffff 64%);
+  box-shadow: 0 22px 64px rgba(120, 53, 15, 0.045);
+}
+
+.portfolio-light #skills {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(124, 58, 237, 0.065), transparent 24%),
+    linear-gradient(180deg, #f7f9fd, #f2f6fb 52%, #f8fafc) !important;
+}
+
+.portfolio-light .content-sections-shell {
+  padding-block: 2rem;
+  background:
+    linear-gradient(rgba(99, 102, 241, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.02) 1px, transparent 1px),
+    linear-gradient(180deg, #f5f8fc, #ffffff 42%, #f7f9fd) !important;
+  background-size: 56px 56px, 56px 56px, auto !important;
+}
+
+.portfolio-light section article,
+.portfolio-light section aside,
+.portfolio-light section [class*="rounded-[20px]"] {
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.99), rgba(248, 250, 252, 0.96));
+  border-color: #dbe4ef !important;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.035),
+    0 16px 40px rgba(15, 23, 42, 0.065) !important;
+}
+
+.portfolio-light section article:hover,
+.portfolio-light section aside:hover {
+  border-color: rgba(99, 102, 241, 0.28) !important;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 22px 52px rgba(37, 99, 235, 0.1) !important;
+}
+
+.portfolio-light #home a[class*="border-"],
+.portfolio-light #projects a,
+.portfolio-light #projects button,
+.portfolio-light #resume button,
+.portfolio-light #contact button {
+  border-radius: 0.65rem;
+}
+
+.portfolio-light #contact input,
+.portfolio-light #contact textarea {
+  background: linear-gradient(180deg, #f8fafc, #ffffff) !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.035);
+}
+
+.portfolio-light footer {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(14, 165, 233, 0.07), transparent 24%),
+    linear-gradient(180deg, #f4f7fb, #eef3f9) !important;
+}
+
+/* Premium light composition: full-width rhythm instead of white cards inside white cards. */
+body.portfolio-light-mode::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+.portfolio-light #summary,
+.portfolio-light #about,
+.portfolio-light #education,
+.portfolio-light #experience,
+.portfolio-light #projects,
+.portfolio-light #certificates,
+.portfolio-light #achievements {
+  border: 0 !important;
+  border-radius: 0;
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.portfolio-light #summary {
+  background:
+    radial-gradient(circle at 78% 18%, rgba(79, 70, 229, 0.11), transparent 25%),
+    radial-gradient(circle at 24% 76%, rgba(6, 182, 212, 0.07), transparent 24%),
+    #f8fafc;
+  box-shadow: 0 0 0 100vmax #f8fafc;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #about {
+  background:
+    radial-gradient(circle at 12% 24%, rgba(139, 92, 246, 0.075), transparent 24%),
+    #ffffff;
+  box-shadow: 0 0 0 100vmax #ffffff;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #education {
+  background:
+    radial-gradient(circle at 84% 12%, rgba(79, 70, 229, 0.09), transparent 26%),
+    linear-gradient(180deg, #f4f7fb, #f7f9fc);
+  box-shadow: 0 0 0 100vmax #f5f8fc;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #experience {
+  background:
+    radial-gradient(circle at 14% 12%, rgba(16, 185, 129, 0.07), transparent 24%),
+    #ffffff;
+  box-shadow: 0 0 0 100vmax #ffffff;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #projects {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(6, 182, 212, 0.08), transparent 24%),
+    radial-gradient(circle at 88% 86%, rgba(139, 92, 246, 0.085), transparent 26%),
+    #f5f7fb;
+  box-shadow: 0 0 0 100vmax #f5f7fb;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #certificates {
+  background:
+    radial-gradient(circle at 88% 14%, rgba(59, 130, 246, 0.09), transparent 25%),
+    linear-gradient(180deg, #f7fbff, #eef6ff);
+  box-shadow: 0 0 0 100vmax #f3f8fe;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #achievements {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(245, 158, 11, 0.1), transparent 24%),
+    #ffffff;
+  box-shadow: 0 0 0 100vmax #ffffff;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-light #resume {
+  background:
+    radial-gradient(circle at 12% 68%, rgba(6, 182, 212, 0.07), transparent 25%),
+    linear-gradient(180deg, #f4f7fb, #f7f9fc) !important;
+}
+
+.portfolio-light #contact {
+  background:
+    radial-gradient(circle at 10% 32%, rgba(6, 182, 212, 0.1), transparent 26%),
+    radial-gradient(circle at 92% 72%, rgba(139, 92, 246, 0.1), transparent 28%),
+    linear-gradient(135deg, #ffffff, #f8faff) !important;
+}
+
+.portfolio-light #experience > div,
+.portfolio-light #projects > div,
+.portfolio-light #certificates > div,
+.portfolio-light #achievements > div {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.portfolio-light #summary h2,
+.portfolio-light #about h2,
+.portfolio-light #education h2,
+.portfolio-light #skills h2,
+.portfolio-light #experience h2,
+.portfolio-light #projects h2,
+.portfolio-light #certificates h2,
+.portfolio-light #achievements h2,
+.portfolio-light #resume h2,
+.portfolio-light #contact h2 {
+  font-size: clamp(2.75rem, 5vw, 4rem) !important;
+  line-height: 1.04;
+}
+
+.portfolio-light #home h1 {
+  font-size: clamp(3.25rem, 8vw, 5rem) !important;
+}
+
+.portfolio-light #about .text-cyan-300,
+.portfolio-light #about .text-cyan-100 {
+  color: #7c3aed !important;
+}
+
+.portfolio-light #education .text-cyan-300,
+.portfolio-light #resume .text-cyan-300 {
+  color: #4f46e5 !important;
+}
+
+.portfolio-light #experience .text-cyan-300 {
+  color: #059669 !important;
+}
+
+.portfolio-light #certificates .text-cyan-200,
+.portfolio-light #certificates .text-cyan-300 {
+  color: #2563eb !important;
+}
+
+.portfolio-light section article,
+.portfolio-light section aside,
+.portfolio-light section [class*="rounded-[20px]"] {
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 18px 48px rgba(15, 23, 42, 0.075) !important;
+  backdrop-filter: blur(18px);
+}
+
+.portfolio-light section article:hover,
+.portfolio-light section aside:hover {
+  transform: translateY(-5px);
+  border-color: rgba(91, 95, 239, 0.3) !important;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 28px 70px rgba(79, 70, 229, 0.13) !important;
+}
+
+.hero-orbit-icon {
+  position: absolute;
+  z-index: 8;
+  display: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(203, 213, 225, 0.88);
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+}
+
+.hero-orbit-icon-1 { left: 3%; top: 20%; }
+.hero-orbit-icon-2 { right: 0; top: 24%; }
+.hero-orbit-icon-3 { left: 9%; bottom: 14%; }
+.hero-orbit-icon-4 { right: 7%; bottom: 12%; }
+
+.portfolio-dark .hero-orbit-icon {
+  border-color: rgba(103, 232, 249, 0.2);
+  background: #07101f;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.26);
+}
+
+@media (min-width: 640px) {
+  .portfolio-light .hero-orbit-icon { display: block; }
+}
+
+@media (min-width: 1280px) {
+  .portfolio-light #projects .project-card-featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+  }
+
+  .portfolio-light #projects .project-card-featured > :first-child,
+  .portfolio-light #projects .project-card-featured > :first-child > * {
+    min-height: 100%;
+  }
+
+  .portfolio-light #projects .project-card-featured > :first-child [class*="h-[240px]"] {
+    height: 100%;
+    min-height: 26rem;
+  }
+}
+
+.vanta-bird-field canvas {
+  background: transparent !important;
+}
+
+.tech-grid-background {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+}
+
+.tech-stack-section {
+  --tech-text: #f8fafc;
+  --tech-muted: #71809a;
+  --tech-panel: rgba(7, 16, 31, 0.76);
+  --tech-panel-border: rgba(103, 232, 249, 0.16);
+  --tech-item: rgba(8, 18, 35, 0.9);
+}
+
+.tech-stack-section.tech-stack-light {
+  --tech-text: #111827;
+  --tech-muted: #64748b;
+  --tech-panel: rgba(255, 255, 255, 0.82);
+  --tech-panel-border: rgba(100, 116, 139, 0.18);
+  --tech-item: rgba(255, 255, 255, 0.96);
+}
+
+.tech-stack-eyebrow {
+  color: #22d3ee;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+.tech-stack-title {
+  margin-top: 0.9rem;
+  color: var(--tech-text);
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: clamp(1.7rem, 4vw, 2.45rem);
+  font-weight: 900;
+  letter-spacing: 0.015em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.tech-stack-title span {
+  background: linear-gradient(90deg, #22d3ee, #8b5cf6, #d946ef);
+  background-clip: text;
+  color: transparent;
+}
+
+.tech-stack-subtitle {
+  max-width: 44rem;
+  margin: 1.15rem auto 0;
+  color: var(--tech-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.skill-panel {
+  --skill-accent: #22d3ee;
+  position: relative;
+  min-width: 0;
+  border: 1px solid var(--tech-panel-border);
+  border-radius: 0.75rem;
+  background: var(--tech-panel);
+  padding: 1.1rem 1rem 1.2rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025), 0 18px 52px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(14px);
+  transition: border-color 260ms ease, box-shadow 260ms ease, transform 260ms ease;
+}
+
+.skill-panel:hover {
+  border-color: color-mix(in srgb, var(--skill-accent) 48%, transparent);
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18), 0 0 28px color-mix(in srgb, var(--skill-accent) 8%, transparent);
+  transform: translateY(-2px);
+}
+
+.skill-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.skill-panel-heading h3 {
+  width: fit-content;
+  border: 1px solid color-mix(in srgb, var(--skill-accent) 42%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--skill-accent) 12%, transparent);
+  padding: 0.3rem 0.8rem;
+  color: var(--skill-accent);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.skill-panel-heading p {
+  display: none;
+}
+
+.skill-panel-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  align-items: start;
+  gap: 1rem;
+  margin-top: 1.15rem;
+}
+
+.skill-panel-item {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.skill-panel-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--skill-accent) 22%, rgba(148, 163, 184, 0.2));
+  border-radius: 0.8rem;
+  background: #fff;
+  box-shadow: 0 9px 22px rgba(0, 0, 0, 0.18);
+  transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.skill-panel-item:hover .skill-panel-icon {
+  border-color: color-mix(in srgb, var(--skill-accent) 68%, white 5%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24), 0 0 24px color-mix(in srgb, var(--skill-accent) 22%, transparent);
+  transform: translateY(-4px) scale(1.055);
+}
+
+.skill-panel-item > p {
+  max-width: 100%;
+  margin-top: 0.65rem;
+  overflow: hidden;
+  color: var(--tech-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skill-panel-tooltip {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  z-index: 20;
+  width: max-content;
+  max-width: 11rem;
+  transform: translate(-50%, 6px);
+  border: 1px solid color-mix(in srgb, var(--skill-accent) 35%, transparent);
+  border-radius: 0.45rem;
+  background: rgba(3, 7, 18, 0.96);
+  padding: 0.45rem 0.65rem;
+  color: #cbd5e1;
+  font-size: 0.65rem;
+  opacity: 0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.skill-panel-item:hover .skill-panel-tooltip {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.technology-marquee {
+  margin-top: 0.3rem;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: 0.75rem;
+  background: var(--tech-panel);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.16), inset 0 0 32px rgba(34, 211, 238, 0.025);
+}
+
+.technology-marquee-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1rem 0.35rem;
+  color: #22d3ee;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.technology-marquee-window {
+  overflow: hidden;
+  padding: 0.75rem 0 1rem;
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.technology-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: technology-marquee 36s linear infinite;
+  will-change: transform;
+}
+
+.technology-marquee-window:hover .technology-marquee-track {
+  animation-play-state: paused;
+}
+
+.technology-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.8rem;
+  padding-right: 0.8rem;
+}
+
+.technology-marquee-item {
+  width: 3.4rem;
+  height: 3.4rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 0.65rem;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.technology-marquee-item:hover {
+  box-shadow: 0 10px 24px rgba(34, 211, 238, 0.18);
+  transform: translateY(-3px) scale(1.06);
+}
+
+@keyframes technology-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .skill-panel-items {
+    grid-template-columns: repeat(auto-fit, minmax(66px, 1fr));
+    gap: 0.9rem 0.55rem;
+  }
+
+  .skill-panel-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .skill-panel-item > p {
+    font-size: 0.65rem;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .technology-marquee-track {
+    animation-play-state: paused;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
