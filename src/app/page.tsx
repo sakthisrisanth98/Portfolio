@@ -1427,9 +1427,9 @@ function VantaBackground({
       if (!factory) {
         return;
       }
-      // Vanta divides the device pixel ratio by scale. Matching the DPR keeps
-      // the canvas crisp enough while avoiding an expensive retina render.
-      const renderScale = Math.max(1, window.devicePixelRatio || 1);
+      // Keep Vanta on a 1x renderer so the bird motion stays smooth on
+      // high-DPI displays and during scroll.
+      const renderScale = 1;
       const shared = {
         el: target,
         THREE,
@@ -3489,12 +3489,14 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="resume-preview-frame no-scrollbar mt-5 overflow-hidden rounded-xl border border-white/10 bg-[#07101f] shadow-[0_18px_50px_rgba(0,0,0,.35)]">
-                  <iframe
-                    src="/Resume.pdf#view=Fit&toolbar=0&navpanes=0&scrollbar=0"
-                    title="Sakthi Sri Santh M resume preview"
-                    scrolling="no"
-                    className="no-scrollbar h-[34rem] w-full bg-white pointer-events-none md:h-[42rem]"
+                <div className="resume-preview-frame no-scrollbar mt-5 flex justify-center overflow-hidden rounded-xl border border-white/10 bg-transparent shadow-[0_18px_50px_rgba(0,0,0,.22)]">
+                  <Image
+                    src="/resume-preview.png"
+                    alt="Sakthi Sri Santh M resume preview"
+                    width={1489}
+                    height={2106}
+                    sizes="(min-width: 1024px) 54vw, 92vw"
+                    className="h-auto w-full max-w-[48rem] bg-white object-contain"
                   />
                 </div>
               </motion.div>
