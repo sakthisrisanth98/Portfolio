@@ -39,7 +39,7 @@ canvas {
 }
 
 .vanta-bird-field {
-  pointer-events: none;
+  pointer-events: auto;
   position: absolute;
   inset: 0 0 auto;
   height: min(100vh, 920px);
@@ -618,6 +618,20 @@ body.portfolio-light-mode::before {
 
 .vanta-bird-field canvas {
   background: transparent !important;
+}
+
+.project-modal-trigger {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden;
+}
+
+.project-modal-trigger > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
 }
 
 .tech-grid-background {

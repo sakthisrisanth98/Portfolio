@@ -233,7 +233,7 @@ const education = [
     location: "Kunniyamuthur, Coimbatore",
     duration: "2023 - 2027",
     scoreLabel: "CGPA",
-    score: "8.23",
+    score: "8.02",
     percentage: "",
     mapLink: "https://maps.app.goo.gl/niyqXzzZMcVyWEDT8?g_st=aw",
     marker: "diamond",
@@ -1427,12 +1427,14 @@ function VantaBackground({
       if (!factory) {
         return;
       }
+      // Vanta divides the device pixel ratio by scale. Matching the DPR keeps
+      // the canvas crisp enough while avoiding an expensive retina render.
       const renderScale = Math.max(1, window.devicePixelRatio || 1);
       const shared = {
         el: target,
         THREE,
-        mouseControls: mode !== "birds",
-        touchControls: mode !== "birds",
+        mouseControls: true,
+        touchControls: true,
         gyroControls: false,
         minHeight: 240,
         minWidth: 240,
@@ -1451,12 +1453,12 @@ function VantaBackground({
               color2: 0x00d1ff,
               colorMode: "varianceGradient",
               quantity: window.innerWidth < 768 ? 3 : 4,
-              birdSize: 0.78,
-              wingSpan: 20,
-              speedLimit: 3.6,
+              birdSize: 0.72,
+              wingSpan: 22,
+              speedLimit: 4.4,
               separation: 22,
-              alignment: 26,
-              cohesion: 24,
+              alignment: 18,
+              cohesion: 18,
               ...overrides,
             }
           : mode === "net"
@@ -1572,12 +1574,12 @@ function ProjectVisual({ project, variant = "card" }: { project: Project; varian
   const heightClass = isModal ? "min-h-0" : isStage ? "h-full min-h-[24rem]" : "h-full";
 
   return (
-    <div className={`${heightClass} overflow-hidden rounded-md bg-[#020617]`}>
+    <div className={`${heightClass} min-w-0 overflow-hidden rounded-md bg-[#020617]`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={project.image}
         alt={`${project.title} screenshot`}
-        className={`${isModal ? "h-auto max-h-[68vh] w-full object-contain" : "h-full w-full object-cover"} transition duration-700 group-hover:scale-105`}
+        className={`${isModal ? "h-auto max-h-[68vh] w-full max-w-full object-contain" : "h-full w-full min-w-0 object-cover"} transition duration-700 group-hover:scale-105`}
       />
     </div>
   );
@@ -1588,7 +1590,7 @@ function ProjectModal({ project, children }: { project: Project; children?: Reac
     <Dialog.Root>
       <Dialog.Trigger asChild>
         {children ? (
-          <button type="button" className="block w-full text-left">
+          <button type="button" className="project-modal-trigger text-left">
             {children}
           </button>
         ) : (
@@ -1804,6 +1806,22 @@ export default function Home() {
     gmailComposeUrl.searchParams.set("body", body);
 
     window.open(gmailComposeUrl.toString(), "_blank", "noopener,noreferrer");
+  };
+  const handlePrintResume = () => {
+    const printFrame = document.createElement("iframe");
+    printFrame.src = "/Resume.pdf";
+    printFrame.title = "Print Sakthi Sri Santh M resume";
+    printFrame.style.position = "fixed";
+    printFrame.style.width = "1px";
+    printFrame.style.height = "1px";
+    printFrame.style.opacity = "0";
+    printFrame.style.pointerEvents = "none";
+    printFrame.onload = () => {
+      printFrame.contentWindow?.focus();
+      printFrame.contentWindow?.print();
+      window.setTimeout(() => printFrame.remove(), 1500);
+    };
+    document.body.appendChild(printFrame);
   };
   const visibleCertificates = useMemo(
     () =>
@@ -2088,11 +2106,8 @@ export default function Home() {
         <section id="home" className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-12 px-4 py-20 md:px-6 lg:grid-cols-[1fr_0.9fr]">
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <p className="text-xl font-medium text-cyan-100 md:text-2xl">My Name is</p>
-            <h1 className="mt-4 max-w-4xl text-5xl font-black uppercase leading-[0.95] text-white drop-shadow-[0_0_28px_rgba(34,211,238,0.2)] md:text-7xl xl:text-8xl">
-              Sakthi Sri
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-purple-200">
-                Santh M
-              </span>
+            <h1 className="mt-4 max-w-5xl whitespace-nowrap text-[clamp(2rem,6vw,6.5rem)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-white drop-shadow-[0_0_24px_rgba(34,211,238,0.16)]">
+              Sakthi Sri <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-purple-200">Santh M</span>
             </h1>
             <div className="mt-5 h-1.5 w-36 rounded-full bg-gradient-to-r from-cyan-300 to-purple-400 shadow-[0_0_24px_rgba(34,211,238,0.5)]" />
             <p className="mt-8 min-h-10 text-2xl font-semibold text-slate-100 md:text-3xl">
@@ -2144,12 +2159,12 @@ export default function Home() {
             transition={{ duration: 0.9, delay: 0.18, ease: "easeOut" }}
           >
             <motion.div
-              className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-300 via-purple-500 to-pink-400 opacity-35 blur-2xl"
-              animate={{ scale: [1, 1.04, 1], opacity: [0.2, 0.34, 0.2] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-8 rounded-full bg-gradient-to-br from-cyan-300/35 via-blue-500/20 to-purple-500/35 blur-2xl"
+              animate={{ scale: [1, 1.025, 1], opacity: [0.18, 0.28, 0.18] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
             />
-            <div className="absolute inset-8 rounded-full border border-cyan-300/30" />
-            <div className="absolute inset-16 rounded-full border border-purple-300/35" />
+            <div className="absolute inset-10 rounded-full border border-cyan-300/20" />
+            <div className="absolute inset-16 rounded-full border border-purple-300/22" />
             {[
               { name: "React", image: skillAsset("08_56_58") },
               { name: "Next.js", image: skillAsset("08_57_03") },
@@ -2167,17 +2182,17 @@ export default function Home() {
               </motion.span>
             ))}
             <div className="relative grid size-full place-items-center rounded-full p-6">
-              <div className="grid size-[78%] place-items-center rounded-full bg-gradient-to-br from-cyan-300 via-blue-500 to-purple-500 p-[3px] shadow-[0_0_70px_rgba(34,211,238,0.18)]">
-                <div className="relative size-full overflow-hidden rounded-full bg-[#07192f]">
+              <div className="grid size-[76%] place-items-center rounded-full bg-gradient-to-br from-cyan-200 via-blue-500 to-purple-400 p-[2px] shadow-[0_28px_80px_rgba(2,6,23,0.52)]">
+                <div className="relative size-full overflow-hidden rounded-full bg-[#07192f] ring-1 ring-white/10">
                   <Image
                     src="/photo.jpeg"
                     alt="Sakthi Sri Santh M"
                     fill
                     priority
                     sizes="(min-width: 1024px) 420px, 70vw"
-                    className="object-cover object-[center_34%]"
+                    className="object-cover object-[center_32%]"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-full bg-[linear-gradient(180deg,transparent_68%,rgba(2,6,23,0.2))]" />
+                  <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_22%,transparent_54%,rgba(2,6,23,0.16)_100%)]" />
                 </div>
               </div>
             </div>
@@ -2874,7 +2889,7 @@ export default function Home() {
                           rotateX: { duration: 0.22 },
                           rotateY: { duration: 0.22 },
                         }}
-                        className="group relative block overflow-hidden rounded-lg border bg-white shadow-2xl"
+                        className="group relative block w-full max-w-full overflow-hidden rounded-lg border bg-white shadow-2xl"
                         style={{
                           borderColor: `${internshipTheme.primary}4d`,
                           boxShadow: `0 0 40px ${internshipTheme.primary}1f`,
@@ -2895,7 +2910,7 @@ export default function Home() {
                         <img
                           src={activeInternship.previewUrl}
                           alt={`${activeInternship.title} certificate preview`}
-                          className="max-h-[32rem] w-full object-contain transition duration-300 group-hover:brightness-105"
+                          className="max-h-[32rem] w-full max-w-full object-contain transition duration-300 group-hover:brightness-105"
                         />
                       </motion.a>
                     </div>
@@ -2977,11 +2992,11 @@ export default function Home() {
                   viewport={{ once: false, amount: 0.18 }}
                   transition={{ duration: 0.32, delay: index * 0.035 }}
                   whileHover={{ y: -8 }}
-                  className={`group flex h-full flex-col overflow-hidden rounded-[22px] border bg-[rgba(15,23,42,0.85)] shadow-xl backdrop-blur-xl transition ${index === 0 ? "project-card-featured" : ""}`}
+                  className={`group flex min-w-0 h-full flex-col overflow-hidden rounded-[22px] border bg-[rgba(15,23,42,0.85)] shadow-xl backdrop-blur-xl transition ${index === 0 ? "project-card-featured" : ""}`}
                   style={{ borderColor: "rgba(148,163,184,0.18)" }}
                 >
                   <ProjectModal project={project}>
-                    <div className="relative h-[240px] overflow-hidden bg-[#020617]">
+                    <div className="relative h-[240px] w-full max-w-full overflow-hidden bg-[#020617]">
                       <ProjectVisual project={project} />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020617]/70 via-transparent to-transparent" />
                       <span className="absolute left-4 top-4 rounded-md bg-black/60 px-3 py-1 text-xs font-black text-white backdrop-blur">
@@ -3380,7 +3395,7 @@ export default function Home() {
                         rotateX: { duration: 0.22 },
                         rotateY: { duration: 0.22 },
                       }}
-                      className="group relative block overflow-hidden rounded-lg border bg-white shadow-2xl"
+                      className="group relative block w-full max-w-full overflow-hidden rounded-lg border bg-white shadow-2xl"
                       style={{ borderColor: `${activeAchievement.accent}4d`, boxShadow: `0 0 40px ${activeAchievement.accent}24` }}
                     >
                       <div className="pointer-events-none absolute inset-0 z-10 rounded-lg ring-1 ring-amber-100/20 transition group-hover:ring-amber-200/80" />
@@ -3389,7 +3404,7 @@ export default function Home() {
                       <img
                         src={activeAchievement.previewUrl}
                         alt={`${activeAchievement.title} verification preview`}
-                        className="max-h-[32rem] w-full object-contain transition duration-300 group-hover:brightness-105"
+                        className="max-h-[32rem] w-full max-w-full object-contain transition duration-300 group-hover:brightness-105"
                       />
                     </motion.a>
                   </div>
@@ -3440,13 +3455,13 @@ export default function Home() {
               </p>
             </motion.div>
 
-            <div className="mt-14 grid items-stretch gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="mt-14 grid items-stretch gap-6 lg:grid-cols-[1.2fr_0.8fr]">
               <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65 }}
-                className="rounded-[20px] border border-cyan-300/20 bg-[#0b1220]/90 p-5 shadow-[0_24px_70px_rgba(0,0,0,.3)] backdrop-blur-xl md:p-7"
+                className="rounded-2xl border border-cyan-300/20 bg-[#0b1220]/92 p-4 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-6"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
                   <div className="flex items-center gap-3">
@@ -3459,7 +3474,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {["ATS Friendly", "Updated 2026", "PDF Ready"].map((badge, index) => (
+                    {["ATS Optimized", "Updated July 2026", "PDF"].map((badge, index) => (
                       <span
                         key={badge}
                         className={`rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${
@@ -3474,28 +3489,13 @@ export default function Home() {
                   </div>
                 </div>
 
-                <motion.div
-                  animate={{ boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 34px rgba(34,211,238,.10)", "0 0 0 rgba(34,211,238,0)"] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative mt-5 grid min-h-[25rem] place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#07101f] px-6 text-center"
-                >
-                  <div aria-hidden="true" className="absolute inset-x-10 top-8 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
-                  <div aria-hidden="true" className="absolute left-8 top-12 h-20 w-1 rounded-full bg-gradient-to-b from-cyan-300 to-purple-400" />
-                  <div className="relative max-w-sm">
-                    <span className="mx-auto grid size-16 place-items-center rounded-lg border border-cyan-300/20 bg-cyan-300/[0.06] text-cyan-200">
-                      <FileText size={31} />
-                    </span>
-                    <p className="mt-6 font-serif text-2xl font-bold text-slate-100 md:text-3xl">Resume PDF will be added soon</p>
-                    <p className="mt-3 text-sm leading-6 text-slate-500">
-                      The document area is prepared for the final downloadable resume.
-                    </p>
-                  </div>
-                  <div aria-hidden="true" className="absolute inset-x-8 bottom-8 grid gap-2 opacity-30">
-                    <span className="h-1.5 w-2/3 rounded-full bg-slate-500" />
-                    <span className="h-1.5 w-full rounded-full bg-slate-600" />
-                    <span className="h-1.5 w-4/5 rounded-full bg-slate-600" />
-                  </div>
-                </motion.div>
+                <div className="mt-5 overflow-hidden rounded-xl border border-white/10 bg-[#07101f] shadow-[0_18px_50px_rgba(0,0,0,.35)]">
+                  <iframe
+                    src="/Resume.pdf#view=FitH&toolbar=0&navpanes=0"
+                    title="Sakthi Sri Santh M resume preview"
+                    className="h-[34rem] w-full bg-white md:h-[42rem]"
+                  />
+                </div>
               </motion.div>
 
               <motion.aside
@@ -3503,44 +3503,47 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65, delay: 0.1 }}
-                className="flex flex-col justify-center rounded-[20px] border border-purple-400/20 bg-[#0b1220]/90 p-6 shadow-[0_24px_70px_rgba(0,0,0,.3)] backdrop-blur-xl md:p-8"
+                className="flex flex-col justify-center rounded-2xl border border-purple-400/20 bg-[#0b1220]/92 p-6 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-8"
               >
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300">Document Access</p>
                 <h3 className="mt-3 text-3xl font-bold text-white">Resume Actions</h3>
                 <p className="mt-4 leading-7 text-slate-400">
-                  Review, save, or print the final resume from one focused place once the PDF is published.
+                  Review my experience, technical foundation, projects, and verified learning record.
                 </p>
 
                 <div className="mt-8 grid gap-3">
-                  {[
-                    { label: "View Resume", icon: Eye, tone: "cyan" },
-                    { label: "Download PDF", icon: Download, tone: "purple" },
-                    { label: "Print Resume", icon: Printer, tone: "neutral" },
-                  ].map(({ label, icon: Icon, tone }) => (
-                    <motion.button
-                      key={label}
-                      type="button"
-                      disabled
-                      whileHover={{ y: -3 }}
-                      className={`inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border px-5 text-left font-bold transition disabled:cursor-not-allowed disabled:opacity-70 ${
-                        tone === "cyan"
-                          ? "border-cyan-300/25 bg-cyan-300/10 text-cyan-100"
-                          : tone === "purple"
-                            ? "border-purple-300/25 bg-purple-300/10 text-purple-100"
-                            : "border-white/10 bg-white/[0.03] text-slate-200"
-                      }`}
-                    >
-                      <span className="flex items-center gap-3">
-                        <Icon size={19} />
-                        {label}
-                      </span>
-                      <ChevronRight size={18} className="opacity-55" />
-                    </motion.button>
-                  ))}
+                  <motion.a
+                    href="/Resume.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    whileHover={{ y: -3 }}
+                    className="inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border border-cyan-300/28 bg-cyan-300/10 px-5 font-bold text-cyan-100 transition hover:border-cyan-200/55 hover:bg-cyan-300/15"
+                  >
+                    <span className="flex items-center gap-3"><Eye size={19} />View Resume</span>
+                    <ExternalLink size={17} className="opacity-65" />
+                  </motion.a>
+                  <motion.a
+                    href="/Resume.pdf"
+                    download="Sakthi-Sri-Santh-M-Resume.pdf"
+                    whileHover={{ y: -3 }}
+                    className="inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border border-purple-300/28 bg-purple-300/10 px-5 font-bold text-purple-100 transition hover:border-purple-200/55 hover:bg-purple-300/15"
+                  >
+                    <span className="flex items-center gap-3"><Download size={19} />Download PDF</span>
+                    <ChevronRight size={17} className="opacity-65" />
+                  </motion.a>
+                  <motion.button
+                    type="button"
+                    onClick={handlePrintResume}
+                    whileHover={{ y: -3 }}
+                    className="inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border border-white/12 bg-white/[0.035] px-5 text-left font-bold text-slate-200 transition hover:border-cyan-300/30 hover:bg-white/[0.055] hover:text-white"
+                  >
+                    <span className="flex items-center gap-3"><Printer size={19} />Print Resume</span>
+                    <ChevronRight size={17} className="opacity-65" />
+                  </motion.button>
                 </div>
 
                 <p className="mt-6 border-t border-white/10 pt-5 text-sm leading-6 text-slate-500">
-                  These actions will activate when the final resume PDF is added.
+                  Available as a verified PDF for quick review, download, and printing.
                 </p>
               </motion.aside>
             </div>
@@ -3774,7 +3777,7 @@ export default function Home() {
       <Dialog.Root open={recruiterMode} onOpenChange={setRecruiterMode}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm" />
-          <Dialog.Content className="fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[94vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-lg border border-cyan-300/20 bg-[#07101f]/98 p-5 text-white shadow-[0_30px_100px_rgba(0,0,0,.6)] md:p-8">
+          <Dialog.Content className="no-scrollbar fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[94vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-cyan-300/20 bg-[#07101f]/98 p-5 text-white shadow-[0_30px_100px_rgba(0,0,0,.6)] md:p-8">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-300 via-purple-400 to-cyan-300" />
             <div className="relative">
               <div className="flex min-w-0 flex-col items-center gap-4 pr-0 text-center sm:flex-row sm:pr-14 sm:text-left">
@@ -3785,7 +3788,7 @@ export default function Home() {
                   <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan-300">Candidate Snapshot</p>
                   <Dialog.Title className="mt-1 font-serif text-3xl font-black md:text-4xl">Sakthi Sri Santh M</Dialog.Title>
                   <Dialog.Description className="mt-1 text-sm text-slate-400 md:text-base">
-                    Software Engineering · Cyber Security · AI Systems
+                    Software Engineering | Cyber Security | AI Systems
                   </Dialog.Description>
                 </div>
               </div>
@@ -3799,7 +3802,7 @@ export default function Home() {
                 ["7", "Major Products", Rocket, "text-cyan-300"],
                 [String(certificates.length), "Certifications", BadgeCheck, "text-purple-300"],
                 [String(internships.length), "Internships", BriefcaseBusiness, "text-emerald-300"],
-                ["8.23", "Current CGPA", GraduationCap, "text-amber-300"],
+                ["8.02", "Current CGPA", GraduationCap, "text-amber-300"],
               ].map(([value, label, Icon, tone]) => (
                 <div key={label as string} className="rounded-lg border border-white/10 bg-white/[0.035] p-4">
                   <Icon size={20} className={tone as string} />
@@ -3810,10 +3813,13 @@ export default function Home() {
             </div>
 
             <div className="mt-5 grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
-              <div className="rounded-lg border border-cyan-300/15 bg-cyan-300/[0.035] p-5 md:p-6">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-300">Engineering Profile</p>
+              <div className="rounded-xl border border-cyan-300/15 bg-cyan-300/[0.035] p-5 md:p-6">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-300">Candidate Value</p>
                 <p className="mt-4 leading-7 text-slate-300">
-                  Fourth-year B.E. Computer Science and Engineering (Cyber Security) student building secure, scalable, and intelligent products across AI, full-stack development, cloud systems, and cyber security.
+                  Fourth-year Computer Science and Engineering student specializing in Cyber Security, with hands-on experience shipping AI, full-stack, commerce, media, and defensive security products.
+                </p>
+                <p className="mt-4 leading-7 text-slate-300">
+                  I combine product thinking with practical engineering: translating requirements into responsive interfaces, API workflows, data systems, and secure, maintainable software.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {["Next.js", "React", "TypeScript", "Python", "FastAPI", "MySQL", "Cloud", "Cyber Security"].map((skill) => (
@@ -3822,18 +3828,18 @@ export default function Home() {
                 </div>
                 <div className="mt-6 border-t border-white/10 pt-5">
                   <p className="text-xs font-black uppercase tracking-[0.22em] text-purple-300">Featured Products</p>
-                  <p className="mt-3 text-sm leading-7 text-slate-300">Limitra AI · Nexmart · Cropix AI Studio · AegisMTD · WebGuard · AnimeZ · AstroVelo</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-300">Limitra AI | Nexmart | Cropix AI Studio | AegisMTD | WebGuard | AnimeZ | AstroVelo</p>
                 </div>
               </div>
 
-              <div className="rounded-lg border border-purple-300/15 bg-purple-300/[0.035] p-5 md:p-6">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-purple-300">Verified Track Record</p>
+              <div className="rounded-xl border border-purple-300/15 bg-purple-300/[0.035] p-5 md:p-6">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-purple-300">Verified Record</p>
                 <div className="mt-4 divide-y divide-white/10">
                   {[
-                    ["Education", "B.E. CSE (Cyber Security), SKCET · 2023–2027"],
-                    ["Experience", "Software development, full-stack, and cyber security internships"],
-                    ["Product Scope", "AI, commerce, security, media, image processing, and games"],
-                    ["Career Direction", "Software engineering opportunities and product-focused teams"],
+                    ["Education", "B.E. CSE (Cyber Security), SKCET | 2023-2027"],
+                    ["Experience", "Three internships across software development, full-stack engineering, and cyber security"],
+                    ["Product Scope", "Seven major products across AI, commerce, security, media, image processing, and games"],
+                    ["Role Fit", "Software engineering, full-stack, AI systems, and security-focused product teams"],
                   ].map(([label, value]) => (
                     <div key={label} className="py-3 first:pt-0 last:pb-0">
                       <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{label}</p>
@@ -3846,9 +3852,9 @@ export default function Home() {
 
             <div className="mt-6 flex flex-wrap gap-3 border-t border-white/10 pt-5">
               {[
+                ["View Resume", "resume", FileText],
                 ["View Projects", "projects", Rocket],
-                ["View Certificates", "certificates", BadgeCheck],
-                ["Resume", "resume", FileText],
+                ["Certificates", "certificates", BadgeCheck],
                 ["Contact Me", "contact", Mail],
               ].map(([label, id, Icon], index) => (
                 <a
