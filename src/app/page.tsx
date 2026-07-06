@@ -437,7 +437,21 @@ const courseworkCategories = [
   },
 ];
 
-const skillAsset = (time: string) => `/skill-${time}.png`;
+const skillAsset = (time: string) => {
+  const availableAssets = new Set([
+    "08_55_24",
+    "08_55_37",
+    "08_55_43",
+    "08_55_59",
+    "08_56_05",
+    "08_56_58",
+    "08_57_03",
+    "08_57_52",
+    "09_00_10",
+  ]);
+
+  return availableAssets.has(time) ? `/skill-${time}.png` : "/logo-light.png";
+};
 const linkedinAsset = "/linkedin-icon.png";
 const technology = (name: string, descriptor: string, time: string): SkillTechnology => ({
   name,
@@ -2266,7 +2280,7 @@ export default function Home() {
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Image
-                  src="/ChatGPT%20Image%20Jun%2022%2C%202026%2C%2010_26_04%20PM.png"
+                  src="/portfolio-preview.png"
                   alt="Futuristic S monogram representing AI, cyber security, cloud, development, and data engineering"
                   width={1254}
                   height={1254}
@@ -3293,13 +3307,13 @@ export default function Home() {
               </p>
             </motion.div>
 
-            <div className="mt-14 grid items-start justify-center gap-6 lg:grid-cols-[minmax(0,48rem)_minmax(0,40rem)]">
+            <div className="mt-14 grid items-stretch justify-center gap-6 lg:grid-cols-[minmax(0,48rem)_minmax(0,40rem)]">
               <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65 }}
-                className="mx-auto w-full rounded-2xl border border-cyan-300/20 bg-[#0b1220]/92 p-4 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-6"
+                className="mx-auto flex h-full w-full flex-col rounded-2xl border border-cyan-300/20 bg-[#0b1220]/92 p-4 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-6"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
                   <div className="flex items-center gap-3">
@@ -3327,7 +3341,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="resume-preview-frame no-scrollbar mt-5 flex justify-center overflow-hidden bg-transparent">
+                <div className="resume-preview-frame no-scrollbar mt-5 flex flex-1 justify-center overflow-hidden bg-transparent">
                   <Image
                     src="/resume-preview.png"
                     alt="Sakthi Sri Santh M resume preview"
@@ -3344,7 +3358,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65, delay: 0.1 }}
-                className="mx-auto flex w-full flex-col rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-5 shadow-[0_24px_80px_rgba(0,0,0,.28)] backdrop-blur-xl md:p-7 lg:p-8"
+                className="mx-auto flex h-full w-full flex-col self-stretch rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-5 shadow-[0_24px_80px_rgba(0,0,0,.28)] backdrop-blur-xl md:p-7 lg:p-8"
               >
                 <div className="flex items-start gap-4">
                   <span className="grid size-12 shrink-0 place-items-center rounded-xl border border-cyan-300/20 bg-cyan-300/10 text-cyan-200 shadow-[0_0_28px_rgba(34,211,238,0.08)]">
@@ -3556,7 +3570,7 @@ export default function Home() {
             <div>
               <a href="#home" className="group relative block h-12 w-[190px] overflow-hidden" aria-label="Sakthi.dev home">
                 <Image
-                  src={theme === "dark" ? skillAsset("08_53_18") : skillAsset("08_53_24")}
+                  src={theme === "dark" ? "/logo-dark.png" : "/logo-light.png"}
                   alt="Sakthi.dev"
                   fill
                   sizes="190px"
