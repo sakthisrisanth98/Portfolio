@@ -437,8 +437,8 @@ const courseworkCategories = [
   },
 ];
 
-const skillAsset = (time: string) => encodeURI(`/ChatGPT Image Jun 27, 2026, ${time} PM.png`);
-const linkedinAsset = encodeURI("/ChatGPT Image Jun 29, 2026, 12_56_16 PM.png");
+const skillAsset = (time: string) => `/skill-${time}.png`;
+const linkedinAsset = "/linkedin-icon.png";
 const technology = (name: string, descriptor: string, time: string): SkillTechnology => ({
   name,
   descriptor,
@@ -672,7 +672,7 @@ const projects: Project[] = [
     gallery: ["Library", "Watch Flow", "Episode Grid", "Mobile View"],
     stack: ["Next.js 15", "React", "Media UI", "Responsive Design"],
     status: "Live",
-    image: "/projects/Screenshot%202026-06-20%20205627.png",
+    image: "/projects/project-205627.png",
     accent: "#ec4899",
     accentTwo: "#a855f7",
     liveUrl: "https://animez-plum.vercel.app",
@@ -695,7 +695,7 @@ const projects: Project[] = [
     stack: ["Phaser 3", "JavaScript", "Game UI", "Responsive Controls", "Missions"],
     gallery: ["Run", "Shop", "Boss Battle", "Missions", "Rewards"],
     status: "Live",
-    image: "/projects/Screenshot%202026-06-20%20205753.png",
+    image: "/projects/project-205753.png",
     accent: "#8b5cf6",
     accentTwo: "#2563eb",
     liveUrl: "https://astrovelo-space-survival-game.vercel.app",
@@ -718,7 +718,7 @@ const projects: Project[] = [
     gallery: ["Chat", "Research", "Files", "Image Tools", "Memory"],
     stack: ["Next.js", "Prisma", "MySQL", "Gemini", "File Upload", "Voice"],
     status: "Live",
-    image: "/projects/Screenshot%202026-06-20%20210330.png",
+    image: "/projects/project-210330.png",
     accent: "#22d3ee",
     accentTwo: "#8b5cf6",
     liveUrl: "https://limitra-ai.vercel.app",
@@ -741,7 +741,7 @@ const projects: Project[] = [
     gallery: ["Storefront", "Seller", "Admin", "Orders", "Analytics"],
     stack: ["Next.js", "Marketplace", "Dashboards", "Cart", "Orders", "Analytics"],
     status: "Live",
-    image: "/projects/Screenshot%202026-06-20%20210410.png",
+    image: "/projects/project-210410.png",
     accent: "#3b82f6",
     accentTwo: "#10b981",
     liveUrl: "https://nexmart-ebon.vercel.app",
@@ -764,7 +764,7 @@ const projects: Project[] = [
     gallery: ["Upload", "Crop", "Restore", "Convert", "Export"],
     stack: ["Next.js", "FastAPI", "OpenCV", "Pillow", "JSZip", "Real-ESRGAN"],
     status: "Live",
-    image: "/projects/Screenshot%202026-06-20%20210436.png",
+    image: "/projects/project-210436.png",
     accent: "#84cc16",
     accentTwo: "#06b6d4",
     liveUrl: "https://cropix-ai.vercel.app",
@@ -786,7 +786,7 @@ const projects: Project[] = [
     gallery: ["Overview", "Containers", "Threat Intel", "Reports", "Network"],
     stack: ["Flask", "SOC Dashboard", "Honeypots", "Threat Globe", "RBAC", "Reports"],
     status: "Local / Case Study",
-    image: "/projects/Screenshot%202026-05-06%20192632.png",
+    image: "/projects/project-192632.png",
     accent: "#ef4444",
     accentTwo: "#22c55e",
     githubUrl: "https://github.com/sakthisrisanth98/Aegistmd",
@@ -807,7 +807,7 @@ const projects: Project[] = [
     gallery: ["Extension Popup", "Risk View", "Domain Intel", "Alerts", "Settings"],
     stack: ["Chrome Extension", "AI Privacy", "Risk Scoring", "Domain Intelligence", "Security UX"],
     status: "Local / Case Study",
-    image: "/projects/ChatGPT%20Image%20Jun%2021%2C%202026%2C%2011_53_44%20AM.png",
+    image: "/projects/project-webguard.png",
     accent: "#10b981",
     accentTwo: "#14b8a6",
     githubUrl: "https://github.com/sakthisrisanth98/WebGuard---Extension",
@@ -1862,11 +1862,7 @@ export default function Home() {
             aria-label="Sakthi.dev home"
           >
             <Image
-              src={
-                theme === "dark"
-                  ? encodeURI("/ChatGPT Image Jun 27, 2026, 08_53_18 PM.png")
-                  : encodeURI("/ChatGPT Image Jun 27, 2026, 08_53_24 PM.png")
-              }
+              src={theme === "dark" ? "/logo-dark.png" : "/logo-light.png"}
               alt="Sakthi.dev"
               fill
               priority
