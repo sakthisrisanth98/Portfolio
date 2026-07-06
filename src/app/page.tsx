@@ -2103,10 +2103,10 @@ export default function Home() {
       </header>
 
       <VantaBackground mode="birds" theme={theme} className="pt-24">
-        <section id="home" className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-12 px-4 py-20 md:px-6 lg:grid-cols-[1fr_0.9fr]">
+        <section id="home" className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-10 px-4 py-18 md:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 xl:gap-12">
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <p className="text-xl font-medium text-cyan-100 md:text-2xl">My Name is</p>
-            <h1 className="mt-4 max-w-5xl whitespace-nowrap text-[clamp(2rem,6vw,6.5rem)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-white drop-shadow-[0_0_24px_rgba(34,211,238,0.16)]">
+            <h1 className="mt-4 max-w-5xl whitespace-nowrap text-[clamp(1.75rem,4.8vw,5rem)] font-black uppercase leading-[0.95] tracking-[-0.04em] text-white drop-shadow-[0_0_24px_rgba(34,211,238,0.16)]">
               Sakthi Sri <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-purple-200">Santh M</span>
             </h1>
             <div className="mt-5 h-1.5 w-36 rounded-full bg-gradient-to-r from-cyan-300 to-purple-400 shadow-[0_0_24px_rgba(34,211,238,0.5)]" />
@@ -2153,18 +2153,18 @@ export default function Home() {
             </div>
           </motion.div>
           <motion.div
-            className="relative mx-auto aspect-square w-full max-w-[34rem]"
+            className="relative mx-auto aspect-square w-full max-w-[32rem] sm:max-w-[38rem] lg:max-w-[43rem] xl:max-w-[46rem]"
             initial={{ opacity: 0, x: 36, scale: 0.94 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.18, ease: "easeOut" }}
           >
             <motion.div
-              className="absolute inset-8 rounded-full bg-gradient-to-br from-cyan-300/35 via-blue-500/20 to-purple-500/35 blur-2xl"
+              className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-300/30 via-blue-500/16 to-purple-500/28 blur-2xl"
               animate={{ scale: [1, 1.025, 1], opacity: [0.18, 0.28, 0.18] }}
               transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
             />
-            <div className="absolute inset-10 rounded-full border border-cyan-300/20" />
-            <div className="absolute inset-16 rounded-full border border-purple-300/22" />
+            <div className="absolute inset-5 rounded-full border border-cyan-300/20" />
+            <div className="absolute inset-11 rounded-full border border-purple-300/22" />
             {[
               { name: "React", image: skillAsset("08_56_58") },
               { name: "Next.js", image: skillAsset("08_57_03") },
@@ -2181,18 +2181,18 @@ export default function Home() {
                 <Image src={technology.image} alt="" fill sizes="56px" className="object-cover" />
               </motion.span>
             ))}
-            <div className="relative grid size-full place-items-center rounded-full p-6">
-              <div className="grid size-[76%] place-items-center rounded-full bg-gradient-to-br from-cyan-200 via-blue-500 to-purple-400 p-[2px] shadow-[0_28px_80px_rgba(2,6,23,0.52)]">
+            <div className="relative grid size-full place-items-center rounded-full p-3 sm:p-5">
+              <div className="grid size-[91%] place-items-center rounded-full bg-gradient-to-br from-cyan-200 via-blue-500 to-purple-400 p-[2px] shadow-[0_30px_90px_rgba(34,211,238,0.16),0_28px_80px_rgba(2,6,23,0.52)]">
                 <div className="relative size-full overflow-hidden rounded-full bg-[#07192f] ring-1 ring-white/10">
                   <Image
                     src="/photo.jpeg"
                     alt="Sakthi Sri Santh M"
                     fill
                     priority
-                    sizes="(min-width: 1024px) 420px, 70vw"
-                    className="object-cover object-[center_32%]"
+                    sizes="(min-width: 1280px) 620px, (min-width: 1024px) 560px, 86vw"
+                    className="object-contain object-center"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_22%,transparent_54%,rgba(2,6,23,0.16)_100%)]" />
+                  <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_18%,transparent_60%,rgba(2,6,23,0.18)_100%)]" />
                 </div>
               </div>
             </div>
@@ -3489,11 +3489,11 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-5 overflow-hidden rounded-xl border border-white/10 bg-[#07101f] shadow-[0_18px_50px_rgba(0,0,0,.35)]">
+                <div className="resume-preview-frame no-scrollbar mt-5 overflow-auto rounded-xl border border-white/10 bg-[#07101f] shadow-[0_18px_50px_rgba(0,0,0,.35)]">
                   <iframe
-                    src="/Resume.pdf#view=FitH&toolbar=0&navpanes=0"
+                    src="/Resume.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
                     title="Sakthi Sri Santh M resume preview"
-                    className="h-[34rem] w-full bg-white md:h-[42rem]"
+                    className="no-scrollbar h-[34rem] w-full bg-white md:h-[42rem]"
                   />
                 </div>
               </motion.div>
@@ -3503,42 +3503,49 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65, delay: 0.1 }}
-                className="flex flex-col justify-center rounded-2xl border border-purple-400/20 bg-[#0b1220]/92 p-6 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-8"
+                className="flex flex-col justify-center rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-5 shadow-[0_24px_80px_rgba(0,0,0,.28)] backdrop-blur-xl md:p-7 lg:p-8"
               >
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300">Document Access</p>
-                <h3 className="mt-3 text-3xl font-bold text-white">Resume Actions</h3>
-                <p className="mt-4 leading-7 text-slate-400">
+                <div className="flex items-start gap-4">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-xl border border-cyan-300/20 bg-cyan-300/10 text-cyan-200 shadow-[0_0_28px_rgba(34,211,238,0.08)]">
+                    <FileText size={22} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300">Document Access</p>
+                    <h3 className="mt-2 text-3xl font-bold leading-tight text-white">Resume Actions</h3>
+                  </div>
+                </div>
+                <p className="mt-5 max-w-md leading-7 text-slate-400">
                   Review my experience, technical foundation, projects, and verified learning record.
                 </p>
 
-                <div className="mt-8 grid gap-3">
+                <div className="mt-8 grid gap-3.5">
                   <motion.a
                     href="/Resume.pdf"
                     target="_blank"
                     rel="noreferrer"
                     whileHover={{ y: -3 }}
-                    className="inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border border-cyan-300/28 bg-cyan-300/10 px-5 font-bold text-cyan-100 transition hover:border-cyan-200/55 hover:bg-cyan-300/15"
+                    className="group inline-flex h-[3.45rem] w-full items-center justify-between rounded-xl border border-cyan-300/20 bg-cyan-300/[0.075] px-5 font-bold text-cyan-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition hover:border-cyan-200/45 hover:bg-cyan-300/[0.11] hover:text-white"
                   >
-                    <span className="flex items-center gap-3"><Eye size={19} />View Resume</span>
-                    <ExternalLink size={17} className="opacity-65" />
+                    <span className="flex items-center gap-3"><Eye size={19} className="text-cyan-200" />View Resume</span>
+                    <ExternalLink size={17} className="opacity-60 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
                   </motion.a>
                   <motion.a
                     href="/Resume.pdf"
                     download="Sakthi-Sri-Santh-M-Resume.pdf"
                     whileHover={{ y: -3 }}
-                    className="inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border border-purple-300/28 bg-purple-300/10 px-5 font-bold text-purple-100 transition hover:border-purple-200/55 hover:bg-purple-300/15"
+                    className="group inline-flex h-[3.45rem] w-full items-center justify-between rounded-xl border border-purple-300/20 bg-purple-300/[0.075] px-5 font-bold text-purple-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition hover:border-purple-200/45 hover:bg-purple-300/[0.11] hover:text-white"
                   >
-                    <span className="flex items-center gap-3"><Download size={19} />Download PDF</span>
-                    <ChevronRight size={17} className="opacity-65" />
+                    <span className="flex items-center gap-3"><Download size={19} className="text-purple-200" />Download PDF</span>
+                    <ChevronRight size={17} className="opacity-60 transition group-hover:translate-x-1 group-hover:opacity-100" />
                   </motion.a>
                   <motion.button
                     type="button"
                     onClick={handlePrintResume}
                     whileHover={{ y: -3 }}
-                    className="inline-flex h-[3.25rem] w-full items-center justify-between rounded-lg border border-white/12 bg-white/[0.035] px-5 text-left font-bold text-slate-200 transition hover:border-cyan-300/30 hover:bg-white/[0.055] hover:text-white"
+                    className="group inline-flex h-[3.45rem] w-full items-center justify-between rounded-xl border border-white/12 bg-white/[0.035] px-5 text-left font-bold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] transition hover:border-cyan-300/25 hover:bg-white/[0.06] hover:text-white"
                   >
-                    <span className="flex items-center gap-3"><Printer size={19} />Print Resume</span>
-                    <ChevronRight size={17} className="opacity-65" />
+                    <span className="flex items-center gap-3"><Printer size={19} className="text-slate-300" />Print Resume</span>
+                    <ChevronRight size={17} className="opacity-60 transition group-hover:translate-x-1 group-hover:opacity-100" />
                   </motion.button>
                 </div>
 
@@ -3777,17 +3784,21 @@ export default function Home() {
       <Dialog.Root open={recruiterMode} onOpenChange={setRecruiterMode}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm" />
-          <Dialog.Content className="no-scrollbar fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[94vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-cyan-300/20 bg-[#07101f]/98 p-5 text-white shadow-[0_30px_100px_rgba(0,0,0,.6)] md:p-8">
+          <Dialog.Content className="no-scrollbar fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[94vw] max-w-6xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-[1.35rem] border border-cyan-300/20 bg-[#07101f]/98 p-4 text-white shadow-[0_30px_100px_rgba(0,0,0,.62)] outline-none backdrop-blur-2xl sm:p-5 md:p-8">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-300 via-purple-400 to-cyan-300" />
+            <div className="pointer-events-none absolute right-6 top-8 h-44 w-44 rounded-full bg-cyan-400/10 blur-3xl" />
+            <div className="pointer-events-none absolute bottom-10 left-6 h-48 w-48 rounded-full bg-purple-500/10 blur-3xl" />
             <div className="relative">
-              <div className="flex min-w-0 flex-col items-center gap-4 pr-0 text-center sm:flex-row sm:pr-14 sm:text-left">
-                <div className="relative size-16 shrink-0 overflow-hidden rounded-full border-2 border-cyan-300/50 bg-[#07192f] shadow-[0_0_28px_rgba(34,211,238,.14)] md:size-20">
-                  <Image src="/photo.jpeg" alt="Sakthi Sri Santh M" fill sizes="80px" className="object-cover object-[center_34%]" />
+              <div className="flex min-w-0 flex-col items-center gap-5 pr-0 text-center sm:flex-row sm:pr-14 sm:text-left">
+                <div className="relative size-20 shrink-0 overflow-hidden rounded-full border border-cyan-300/55 bg-[#07192f] p-[3px] shadow-[0_0_34px_rgba(34,211,238,.2)] md:size-24">
+                  <div className="relative size-full overflow-hidden rounded-full bg-[#07192f]">
+                    <Image src="/photo.jpeg" alt="Sakthi Sri Santh M" fill sizes="96px" className="object-cover object-[center_34%]" />
+                  </div>
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan-300">Candidate Snapshot</p>
-                  <Dialog.Title className="mt-1 font-serif text-3xl font-black md:text-4xl">Sakthi Sri Santh M</Dialog.Title>
-                  <Dialog.Description className="mt-1 text-sm text-slate-400 md:text-base">
+                  <Dialog.Title className="mt-2 font-serif text-3xl font-black leading-tight md:text-5xl">Sakthi Sri Santh M</Dialog.Title>
+                  <Dialog.Description className="mt-2 text-sm font-medium text-slate-400 md:text-lg">
                     Software Engineering | Cyber Security | AI Systems
                   </Dialog.Description>
                 </div>
@@ -3797,33 +3808,43 @@ export default function Home() {
               </Dialog.Close>
             </div>
 
-            <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
               {[
                 ["7", "Major Products", Rocket, "text-cyan-300"],
                 [String(certificates.length), "Certifications", BadgeCheck, "text-purple-300"],
                 [String(internships.length), "Internships", BriefcaseBusiness, "text-emerald-300"],
                 ["8.02", "Current CGPA", GraduationCap, "text-amber-300"],
               ].map(([value, label, Icon, tone]) => (
-                <div key={label as string} className="rounded-lg border border-white/10 bg-white/[0.035] p-4">
-                  <Icon size={20} className={tone as string} />
-                  <p className="mt-3 text-2xl font-black text-white">{value as string}</p>
-                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.15em] text-slate-500">{label as string}</p>
-                </div>
+                <motion.div
+                  key={label as string}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_18px_50px_rgba(0,0,0,.18)] transition hover:-translate-y-1 hover:border-cyan-300/25 hover:bg-white/[0.055] md:p-5"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className={`grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] ${tone as string}`}>
+                      <Icon size={20} />
+                    </span>
+                    <p className="text-3xl font-black leading-none text-white md:text-4xl">{value as string}</p>
+                  </div>
+                  <p className="mt-4 text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">{label as string}</p>
+                </motion.div>
               ))}
             </div>
 
-            <div className="mt-5 grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
-              <div className="rounded-xl border border-cyan-300/15 bg-cyan-300/[0.035] p-5 md:p-6">
+            <div className="mt-5 grid gap-5 lg:grid-cols-[1.12fr_.88fr]">
+              <div className="rounded-2xl border border-cyan-300/15 bg-cyan-300/[0.035] p-5 shadow-[0_20px_60px_rgba(0,0,0,.2)] md:p-7">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-cyan-300">Candidate Value</p>
-                <p className="mt-4 leading-7 text-slate-300">
+                <p className="mt-5 text-base leading-8 text-slate-300 md:text-lg">
                   Fourth-year Computer Science and Engineering student specializing in Cyber Security, with hands-on experience shipping AI, full-stack, commerce, media, and defensive security products.
                 </p>
-                <p className="mt-4 leading-7 text-slate-300">
+                <p className="mt-4 text-base leading-8 text-slate-300 md:text-lg">
                   I combine product thinking with practical engineering: translating requirements into responsive interfaces, API workflows, data systems, and secure, maintainable software.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {["Next.js", "React", "TypeScript", "Python", "FastAPI", "MySQL", "Cloud", "Cyber Security"].map((skill) => (
-                    <span key={skill} className="rounded-md border border-cyan-300/16 bg-[#07192f]/70 px-3 py-2 text-xs font-bold text-cyan-100">{skill}</span>
+                    <span key={skill} className="rounded-full border border-cyan-300/18 bg-[#07192f]/75 px-3.5 py-2 text-xs font-bold text-cyan-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">{skill}</span>
                   ))}
                 </div>
                 <div className="mt-6 border-t border-white/10 pt-5">
@@ -3832,25 +3853,25 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-purple-300/15 bg-purple-300/[0.035] p-5 md:p-6">
+              <div className="rounded-2xl border border-purple-300/15 bg-purple-300/[0.035] p-5 shadow-[0_20px_60px_rgba(0,0,0,.2)] md:p-7">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-purple-300">Verified Record</p>
-                <div className="mt-4 divide-y divide-white/10">
+                <div className="mt-5 grid gap-3">
                   {[
                     ["Education", "B.E. CSE (Cyber Security), SKCET | 2023-2027"],
                     ["Experience", "Three internships across software development, full-stack engineering, and cyber security"],
                     ["Product Scope", "Seven major products across AI, commerce, security, media, image processing, and games"],
                     ["Role Fit", "Software engineering, full-stack, AI systems, and security-focused product teams"],
                   ].map(([label, value]) => (
-                    <div key={label} className="py-3 first:pt-0 last:pb-0">
+                    <div key={label} className="rounded-xl border border-white/10 bg-white/[0.035] p-4">
                       <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{label}</p>
-                      <p className="mt-1 text-sm font-semibold leading-6 text-slate-200">{value}</p>
+                      <p className="mt-2 text-sm font-semibold leading-6 text-slate-200">{value}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3 border-t border-white/10 pt-5">
+            <div className="mt-6 grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 ["View Resume", "resume", FileText],
                 ["View Projects", "projects", Rocket],
@@ -3861,7 +3882,7 @@ export default function Home() {
                   key={id as string}
                   href={`#${id as string}`}
                   onClick={() => setRecruiterMode(false)}
-                  className={`inline-flex h-11 items-center gap-2 rounded-lg border px-4 text-sm font-bold transition hover:-translate-y-0.5 ${index === 0 ? "border-cyan-300 bg-cyan-300 text-[#041018] hover:bg-cyan-200" : "border-white/12 bg-white/[0.035] text-slate-200 hover:border-purple-300/40 hover:text-white"}`}
+                  className={`inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border px-4 text-sm font-bold transition hover:-translate-y-0.5 ${index === 0 ? "border-cyan-300/70 bg-cyan-300/90 text-[#041018] shadow-[0_12px_30px_rgba(34,211,238,.12)] hover:bg-cyan-200" : "border-white/12 bg-white/[0.035] text-slate-200 hover:border-purple-300/40 hover:bg-white/[0.055] hover:text-white"}`}
                 >
                   <Icon size={17} />
                   {label as string}
