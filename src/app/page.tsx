@@ -1452,13 +1452,13 @@ function VantaBackground({
               color1: 0xff0055,
               color2: 0x00d1ff,
               colorMode: "varianceGradient",
-              quantity: window.innerWidth < 768 ? 3 : 4,
-              birdSize: 0.72,
-              wingSpan: 22,
-              speedLimit: 4.4,
-              separation: 22,
-              alignment: 18,
-              cohesion: 18,
+              quantity: window.innerWidth < 768 ? 4 : 5,
+              birdSize: 0.58,
+              wingSpan: 26,
+              speedLimit: 3.6,
+              separation: 18,
+              alignment: 20,
+              cohesion: 20,
               ...overrides,
             }
           : mode === "net"
@@ -2190,7 +2190,7 @@ export default function Home() {
                     fill
                     priority
                     sizes="(min-width: 1280px) 620px, (min-width: 1024px) 560px, 86vw"
-                    className="object-contain object-center"
+                    className="object-cover object-[center_30%]"
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_18%,transparent_60%,rgba(2,6,23,0.18)_100%)]" />
                 </div>
@@ -3489,11 +3489,12 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="resume-preview-frame no-scrollbar mt-5 overflow-auto rounded-xl border border-white/10 bg-[#07101f] shadow-[0_18px_50px_rgba(0,0,0,.35)]">
+                <div className="resume-preview-frame no-scrollbar mt-5 overflow-hidden rounded-xl border border-white/10 bg-[#07101f] shadow-[0_18px_50px_rgba(0,0,0,.35)]">
                   <iframe
-                    src="/Resume.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
+                    src="/Resume.pdf#view=Fit&toolbar=0&navpanes=0&scrollbar=0"
                     title="Sakthi Sri Santh M resume preview"
-                    className="no-scrollbar h-[34rem] w-full bg-white md:h-[42rem]"
+                    scrolling="no"
+                    className="no-scrollbar h-[34rem] w-full bg-white pointer-events-none md:h-[42rem]"
                   />
                 </div>
               </motion.div>
