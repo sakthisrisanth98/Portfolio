@@ -38,18 +38,6 @@ canvas {
   max-width: 100%;
 }
 
-.vanta-bird-field {
-  pointer-events: auto;
-  position: absolute;
-  inset: 0 0 auto;
-  height: min(100vh, 920px);
-  z-index: 2;
-  overflow: hidden;
-  contain: strict;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
-}
-
 /* White-first portfolio system. Dark mode remains available through the header toggle. */
 .portfolio-light {
   --surface: #ffffff;
@@ -63,24 +51,6 @@ canvas {
   color: var(--ink);
 }
 
-.portfolio-light .vanta-stage-light,
-.portfolio-light .space-home-gradient {
-  background:
-    radial-gradient(circle at 78% 16%, rgba(99, 102, 241, 0.08), transparent 24%),
-    radial-gradient(circle at 18% 38%, rgba(14, 165, 233, 0.06), transparent 22%),
-    linear-gradient(180deg, #ffffff 0%, #fbfdff 58%, #ffffff 100%);
-}
-
-.portfolio-light .space-home-dots {
-  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.14) 1.2px, transparent 1.2px);
-  background-size: 34px 34px;
-  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-  opacity: 0.52;
-}
-
-.portfolio-light .vanta-stage-light > [class*="blur-3xl"] {
-  opacity: 0.2;
-}
 
 .portfolio-light section {
   border-color: var(--line) !important;
@@ -307,13 +277,6 @@ body.portfolio-light-mode [role="dialog"] [class*="text-slate-400"] {
     linear-gradient(90deg, rgba(14, 165, 233, 0.016) 1px, transparent 1px),
     #ffffff;
   background-size: 48px 48px;
-}
-
-.portfolio-light .vanta-stage-light {
-  background:
-    radial-gradient(circle at 78% 12%, rgba(99, 102, 241, 0.13), transparent 27%),
-    radial-gradient(circle at 22% 30%, rgba(14, 165, 233, 0.09), transparent 24%),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 48%, #ffffff 100%);
 }
 
 .portfolio-light #home {
@@ -616,9 +579,6 @@ body.portfolio-light-mode::before {
   }
 }
 
-.vanta-bird-field canvas {
-  background: transparent !important;
-}
 
 .project-modal-trigger {
   display: block !important;

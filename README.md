@@ -21,7 +21,7 @@ The portfolio combines a dark futuristic visual system with accessible navigatio
 ## Highlights
 
 - Responsive desktop, tablet, and mobile experience
-- Optimized Vanta.js bird animation with reduced WebGL load
+- Optimized animated header with reduced WebGL load
 - Professional candidate snapshot for rapid recruiter review
 - Seven product-focused software projects with live and source links
 - Three documented internship experiences
@@ -76,8 +76,6 @@ The portfolio combines a dark futuristic visual system with accessible navigatio
 
 - Framer Motion
 - GSAP
-- Three.js
-- Vanta.js Birds, Net, and Halo effects
 
 ### Quality
 
@@ -97,7 +95,7 @@ Portfolio/
 │   ├── intern/                   # Internship records
 │   ├── intern-previews/          # Internship preview images
 │   ├── achievement-previews/     # Achievement proof previews
-│   └── vendor/vanta/             # Local Vanta effect scripts
+│   └── vendor/                   # Public static assets and third-party libraries
 ├── scripts/
 │   └── clean-next.mjs            # Next.js cache cleanup helper
 ├── src/
@@ -105,9 +103,7 @@ Portfolio/
 │   │   ├── globals.css           # Portfolio design system
 │   │   ├── layout.tsx            # Metadata and application shell
 │   │   └── page.tsx              # Portfolio sections and interactions
-│   └── types/
-│       └── vanta.d.ts            # Vanta.js declarations
-├── package.json
+└── package.json
 └── tsconfig.json
 ```
 
@@ -153,7 +149,6 @@ npm start
 
 ## Performance and Accessibility
 
-- Vanta Birds uses a reduced simulation count and capped canvas pixel density.
 - Animated effects are restricted to their intended viewport areas.
 - Reduced-motion preferences are respected.
 - Interactive controls include labels, focus states, and keyboard-accessible dialogs.

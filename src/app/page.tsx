@@ -32,10 +32,8 @@ import {
   Trophy,
   X,
 } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-
-type VantaMode = "birds" | "net" | "halo";
 
 type Project = {
   title: string;
@@ -124,37 +122,6 @@ type SkillCategory = {
   gridClass: string;
   items: SkillTechnology[];
 };
-
-type VantaEffect = {
-  destroy: () => void;
-};
-type VantaFactory = (options: Record<string, unknown>) => VantaEffect;
-
-function loadScript(src: string) {
-  return new Promise<void>((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`);
-    if (existing) {
-      if (existing.dataset.loaded === "true") {
-        resolve();
-        return;
-      }
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener("error", () => reject(new Error(`Failed to load ${src}`)), { once: true });
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.dataset.loaded = "false";
-    script.onload = () => {
-      script.dataset.loaded = "true";
-      resolve();
-    };
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
-    document.body.appendChild(script);
-  });
-}
 
 const navItems = [
   ["Home", "home"],
@@ -1385,129 +1352,6 @@ const contactLinks: ContactLink[] = [
   },
 ];
 
-function VantaBackground({
-  mode,
-  className,
-  theme,
-  children,
-}: {
-  mode: VantaMode;
-  className?: string;
-  theme: "dark" | "light";
-  children: React.ReactNode;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const birdRef = useRef<HTMLDivElement | null>(null);
-  const effect = useRef<VantaEffect | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-  useEffect(() => {
-    let active = true;
-
-    async function loadVanta() {
-      const target = mode === "birds" ? birdRef.current : ref.current;
-      if (!target || prefersReducedMotion || theme === "light") {
-        return;
-      }
-
-      const THREE = await import("three");
-      const vantaWindow = window as typeof window & {
-        THREE?: unknown;
-        VANTA?: Record<string, VantaFactory>;
-        _vantaEffect?: VantaFactory;
-      };
-
-      vantaWindow.THREE = THREE;
-      await loadScript(`/vendor/vanta/vanta.${mode}.min.js`);
-
-      if (!active || !target) {
-        return;
-      }
-
-      const factory = vantaWindow.VANTA?.[mode.toUpperCase()] ?? vantaWindow._vantaEffect;
-      if (!factory) {
-        return;
-      }
-      // Vanta uses devicePixelRatio / scale. Matching DPR keeps the canvas at
-      // a smooth 1x render cost on high-DPI displays.
-      const renderScale = Math.max(1, window.devicePixelRatio || 1);
-      const shared = {
-        el: target,
-        THREE,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 240,
-        minWidth: 240,
-        scale: renderScale,
-        scaleMobile: renderScale,
-      };
-
-      const createEffect = (overrides: Record<string, unknown> = {}) =>
-        factory(
-        mode === "birds"
-          ? {
-              ...shared,
-              backgroundColor: 0x07192f,
-              backgroundAlpha: 0,
-              color1: 0xff0055,
-              color2: 0x00d1ff,
-              colorMode: "varianceGradient",
-              quantity: window.innerWidth < 768 ? 4 : 5,
-              birdSize: 0.58,
-              wingSpan: 26,
-              speedLimit: 3.6,
-              separation: 18,
-              alignment: 20,
-              cohesion: 20,
-              ...overrides,
-            }
-          : mode === "net"
-            ? {
-                ...shared,
-                backgroundColor: 0x07192f,
-                color: 0x20e3ff,
-                points: 8,
-                maxDistance: 18,
-                spacing: 18,
-              }
-            : {
-                ...shared,
-                backgroundColor: 0x07192f,
-                baseColor: 0x6d28d9,
-                size: 1,
-                amplitudeFactor: 1.25,
-                xOffset: 0.08,
-                yOffset: 0.02,
-                ...overrides,
-              },
-      );
-
-      effect.current = createEffect();
-    }
-
-    loadVanta();
-
-    return () => {
-      active = false;
-      effect.current?.destroy();
-      effect.current = null;
-    };
-  }, [mode, prefersReducedMotion, theme]);
-
-  return (
-    <div ref={ref} className={`vanta-stage ${theme === "light" ? "vanta-stage-light" : "vanta-stage-dark"} relative isolate overflow-hidden ${className ?? ""}`}>
-      <div className="space-home-gradient absolute inset-0 -z-10" />
-      <div className="pointer-events-none absolute left-1/2 top-16 z-[1] h-80 w-80 -translate-x-1/2 rounded-full bg-purple-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-20 right-10 z-[1] h-64 w-64 rounded-full bg-cyan-400/12 blur-3xl" />
-      <div className="space-home-dots pointer-events-none absolute inset-0 z-[1]" />
-      {mode === "birds" && !prefersReducedMotion && theme === "dark" ? (
-        <div ref={birdRef} className="vanta-bird-field" aria-hidden="true" />
-      ) : null}
-      <div className="relative z-10">{children}</div>
-    </div>
-  );
-}
-
 function SkillPanel({ category, index }: { category: SkillCategory; index: number }) {
   return (
     <motion.article
@@ -2102,8 +1946,7 @@ export default function Home() {
         )}
       </header>
 
-      <VantaBackground mode="birds" theme={theme} className="pt-24">
-        <section id="home" className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-10 px-4 py-18 md:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 xl:gap-12">
+      <section id="home" className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-10 px-4 py-18 md:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 xl:gap-12">
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <p className="text-xl font-medium text-cyan-100 md:text-2xl">My Name is</p>
             <h1 className="mt-4 max-w-5xl whitespace-nowrap text-[clamp(1.75rem,4.8vw,5rem)] font-black uppercase leading-[0.95] tracking-[-0.04em] text-white drop-shadow-[0_0_24px_rgba(34,211,238,0.16)]">
@@ -2671,12 +2514,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-        </section>
-      </div>
-      </VantaBackground>
+          </section>
+        </div>
 
-        <section
-          id="skills"
+      <section
+        id="skills"
           className={`tech-stack-section relative isolate overflow-hidden border-y py-24 lg:py-28 ${theme === "light" ? "tech-stack-light border-slate-200 bg-[#f7f9fd]" : "border-white/[0.06] bg-[#050a16]"}`}
         >
           <div className="tech-grid-background pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
