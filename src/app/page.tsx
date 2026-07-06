@@ -1427,9 +1427,9 @@ function VantaBackground({
       if (!factory) {
         return;
       }
-      // Keep Vanta on a 1x renderer so the bird motion stays smooth on
-      // high-DPI displays and during scroll.
-      const renderScale = 1;
+      // Vanta uses devicePixelRatio / scale. Matching DPR keeps the canvas at
+      // a smooth 1x render cost on high-DPI displays.
+      const renderScale = Math.max(1, window.devicePixelRatio || 1);
       const shared = {
         el: target,
         THREE,
@@ -3455,13 +3455,13 @@ export default function Home() {
               </p>
             </motion.div>
 
-            <div className="mt-14 grid items-stretch gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="mt-14 grid items-start justify-center gap-6 lg:grid-cols-[minmax(0,48rem)_minmax(0,40rem)]">
               <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65 }}
-                className="rounded-2xl border border-cyan-300/20 bg-[#0b1220]/92 p-4 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-6"
+                className="mx-auto w-full rounded-2xl border border-cyan-300/20 bg-[#0b1220]/92 p-4 shadow-[0_24px_70px_rgba(0,0,0,.3)] md:p-6"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
                   <div className="flex items-center gap-3">
@@ -3489,14 +3489,14 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="resume-preview-frame no-scrollbar mt-5 flex justify-center overflow-hidden rounded-xl border border-white/10 bg-transparent shadow-[0_18px_50px_rgba(0,0,0,.22)]">
+                <div className="resume-preview-frame no-scrollbar mt-5 flex justify-center overflow-hidden bg-transparent">
                   <Image
                     src="/resume-preview.png"
                     alt="Sakthi Sri Santh M resume preview"
                     width={1489}
                     height={2106}
                     sizes="(min-width: 1024px) 54vw, 92vw"
-                    className="h-auto w-full max-w-[48rem] bg-white object-contain"
+                    className="h-auto max-h-[34rem] w-auto max-w-full rounded-lg bg-white object-contain shadow-[0_18px_50px_rgba(0,0,0,.28)]"
                   />
                 </div>
               </motion.div>
@@ -3506,7 +3506,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.65, delay: 0.1 }}
-                className="flex flex-col justify-center rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-5 shadow-[0_24px_80px_rgba(0,0,0,.28)] backdrop-blur-xl md:p-7 lg:p-8"
+                className="mx-auto flex w-full flex-col rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-5 shadow-[0_24px_80px_rgba(0,0,0,.28)] backdrop-blur-xl md:p-7 lg:p-8"
               >
                 <div className="flex items-start gap-4">
                   <span className="grid size-12 shrink-0 place-items-center rounded-xl border border-cyan-300/20 bg-cyan-300/10 text-cyan-200 shadow-[0_0_28px_rgba(34,211,238,0.08)]">
