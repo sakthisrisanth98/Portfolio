@@ -533,24 +533,6 @@ body.portfolio-light-mode::before {
     0 28px 70px rgba(79, 70, 229, 0.13) !important;
 }
 
-.hero-photo-glow {
-  animation: hero-photo-glow 5.5s ease-in-out infinite;
-}
-
-.profile-float {
-  animation: profile-float 6.5s ease-in-out infinite;
-}
-
-@keyframes hero-photo-glow {
-  0%, 100% { opacity: 0.18; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(1.03); }
-}
-
-@keyframes profile-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
 @media (min-width: 1280px) {
   .portfolio-light #projects .project-card-featured {
     grid-column: span 2;
