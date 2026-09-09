@@ -33,6 +33,7 @@ yarn-error.log*
 
 # local development artifacts
 /.next-port
+/public/ChatGPT Image*.png
 /*runtime-check*.png
 /fixed-runtime-check.png
 /final-runtime-check.png

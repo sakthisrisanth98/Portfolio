@@ -533,32 +533,22 @@ body.portfolio-light-mode::before {
     0 28px 70px rgba(79, 70, 229, 0.13) !important;
 }
 
-.hero-orbit-icon {
-  position: absolute;
-  z-index: 8;
-  display: none;
-  width: 3.5rem;
-  height: 3.5rem;
-  overflow: hidden;
-  border: 1px solid rgba(203, 213, 225, 0.88);
-  border-radius: 0.75rem;
-  background: #ffffff;
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+.hero-photo-glow {
+  animation: hero-photo-glow 5.5s ease-in-out infinite;
 }
 
-.hero-orbit-icon-1 { left: 3%; top: 20%; }
-.hero-orbit-icon-2 { right: 0; top: 24%; }
-.hero-orbit-icon-3 { left: 9%; bottom: 14%; }
-.hero-orbit-icon-4 { right: 7%; bottom: 12%; }
-
-.portfolio-dark .hero-orbit-icon {
-  border-color: rgba(103, 232, 249, 0.2);
-  background: #ffffff;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.26);
+.profile-float {
+  animation: profile-float 6.5s ease-in-out infinite;
 }
 
-@media (min-width: 640px) {
-  .hero-orbit-icon { display: block; }
+@keyframes hero-photo-glow {
+  0%, 100% { opacity: 0.18; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.03); }
+}
+
+@keyframes profile-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @media (min-width: 1280px) {

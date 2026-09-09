@@ -1398,7 +1398,7 @@ function SkillPanel({ category, index }: { category: SkillCategory; index: numbe
     <motion.article
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.18 }}
+      viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: 0.7, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className={`skill-panel ${category.gridClass}`}
       style={{ "--skill-accent": category.accent } as React.CSSProperties}
@@ -1416,11 +1416,11 @@ function SkillPanel({ category, index }: { category: SkillCategory; index: numbe
             initial={{ opacity: 0, y: 18, scale: 0.86 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             whileHover={{ y: -8, scale: 1.08 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.35, delay: itemIndex * 0.04, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="skill-panel-icon">
-              <Image src={item.image} alt={`${item.name} technology icon`} width={72} height={72} sizes="72px" className="size-full object-contain p-1.5" />
+              <Image src={item.image} alt={`${item.name} technology icon`} width={72} height={72} sizes="72px" unoptimized className="size-full object-contain p-1.5" />
             </div>
             <p>{item.name}</p>
             <span className="skill-panel-tooltip">{item.descriptor}</span>
@@ -1450,7 +1450,7 @@ function TechnologyMarquee() {
             <div key={copy} className="technology-marquee-group" aria-hidden={copy === 1 ? "true" : undefined}>
               {marqueeTechnologies.map((item) => (
                 <div key={`${copy}-${item.name}`} className="technology-marquee-item" title={item.name}>
-                  <Image src={item.image} alt={copy === 0 ? `${item.name} icon` : ""} width={52} height={52} sizes="52px" className="size-full object-contain p-1" />
+                  <Image src={item.image} alt={copy === 0 ? `${item.name} icon` : ""} width={52} height={52} sizes="52px" unoptimized className="size-full object-contain p-1" />
                 </div>
               ))}
             </div>
@@ -2027,7 +2027,7 @@ export default function Home() {
                   title={label}
                   className="group relative size-12 overflow-hidden rounded-lg border border-cyan-300/20 bg-white transition hover:-translate-y-1 hover:border-cyan-200/60 hover:shadow-[0_0_24px_rgba(34,211,238,0.22)]"
                 >
-                  <Image src={image} alt="" fill sizes="48px" className="object-contain p-1.5 transition group-hover:scale-105" />
+                  <Image src={image} alt="" fill sizes="48px" unoptimized className="object-contain p-1.5 transition group-hover:scale-105" />
                 </a>
               ))}
             </div>
@@ -2046,44 +2046,23 @@ export default function Home() {
             className="relative mx-auto aspect-square w-full max-w-[32rem] sm:max-w-[38rem] lg:max-w-[43rem] xl:max-w-[46rem]"
             initial={{ opacity: 0, x: 36, scale: 0.94 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.18, ease: "easeOut" }}
+            transition={{ duration: 0.7, delay: 0.12, ease: "easeOut" }}
           >
-            <motion.div
-              className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-300/30 via-blue-500/16 to-purple-500/28 blur-2xl"
-              animate={{ scale: [1, 1.025, 1], opacity: [0.18, 0.28, 0.18] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <div className="hero-photo-glow absolute inset-4 rounded-full bg-gradient-to-br from-cyan-300/30 via-blue-500/16 to-purple-500/28 blur-2xl" />
             <div className="absolute inset-5 rounded-full border border-cyan-300/20" />
             <div className="absolute inset-11 rounded-full border border-purple-300/22" />
-            {[
-              { name: "React", image: skillIcon("React") },
-              { name: "Next.js", image: skillIcon("Next.js") },
-              { name: "FastAPI", image: skillIcon("FastAPI") },
-              { name: "Cyber Security", image: skillIcon("Cyber Security") },
-            ].map((technology, index) => (
-              <motion.span
-                key={technology.name}
-                aria-hidden="true"
-                className={`hero-orbit-icon hero-orbit-icon-${index + 1}`}
-                animate={{ y: [0, -7, 0], rotate: [0, index % 2 === 0 ? 3 : -3, 0] }}
-                transition={{ duration: 5.5 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
-              >
-                <Image src={technology.image} alt="" fill sizes="56px" className="object-contain p-1" />
-              </motion.span>
-            ))}
-            <div className="relative grid size-full place-items-center rounded-full p-3 sm:p-5">
-              <div className="grid size-[91%] place-items-center rounded-full bg-gradient-to-br from-cyan-200 via-blue-500 to-purple-400 p-[2px] shadow-[0_30px_90px_rgba(34,211,238,0.16),0_28px_80px_rgba(2,6,23,0.52)]">
-                <div className="relative size-full overflow-hidden rounded-full bg-[#07192f] ring-1 ring-white/10">
+            <div className="relative grid size-full place-items-center rounded-full p-2 sm:p-4">
+              <div className="grid size-[96%] place-items-center rounded-full bg-gradient-to-br from-cyan-200 via-blue-500 to-purple-400 p-[2px] shadow-[0_30px_90px_rgba(34,211,238,0.16),0_28px_80px_rgba(2,6,23,0.52)]">
+                <div className="relative size-full overflow-hidden rounded-full bg-black ring-1 ring-white/10">
                   <Image
-                    src="/photo.jpeg"
+                    src="/profile.webp"
                     alt="Sakthi Sri Santh M"
                     fill
                     priority
-                    quality={75}
+                    quality={80}
                     sizes="(min-width: 1280px) 620px, (min-width: 1024px) 560px, 86vw"
-                    className="object-cover object-[center_30%]"
+                    className="object-contain"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_18%,transparent_60%,rgba(2,6,23,0.18)_100%)]" />
                 </div>
               </div>
             </div>
@@ -2097,7 +2076,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.35 }}
+              viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.65, ease: "easeOut" }}
               className="mx-auto mb-14 max-w-4xl text-center"
             >
@@ -2112,7 +2091,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.34 }}
+                viewport={{ once: true, amount: 0.34 }}
                 transition={{ duration: 0.75, ease: "easeOut" }}
               >
                 <h3 className="max-w-5xl bg-gradient-to-r from-white via-cyan-200 via-45% to-purple-400 bg-clip-text font-serif text-3xl font-black leading-tight tracking-tight text-transparent md:text-5xl">
@@ -2140,7 +2119,7 @@ export default function Home() {
                         key={strength}
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, amount: 0.4 }}
+                        viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.35, delay: index * 0.06, ease: "easeOut" }}
                         whileHover={{ y: -3 }}
                         className="rounded-lg border border-cyan-300/12 bg-[#07192f]/24 p-4 text-center transition hover:border-purple-300/25"
@@ -2161,7 +2140,7 @@ export default function Home() {
                         key={project}
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, amount: 0.4 }}
+                        viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.35, delay: index * 0.045, ease: "easeOut" }}
                         whileHover={{ y: -3 }}
                         className="rounded-md border border-purple-300/14 bg-[#07192f]/22 px-3 py-2 text-sm font-bold text-slate-300 transition hover:border-cyan-300/30 hover:text-white"
@@ -2176,7 +2155,7 @@ export default function Home() {
               <motion.aside
                 initial={{ opacity: 0, x: 28 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, amount: 0.35 }}
+                viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
                 className="relative lg:pt-1"
               >
@@ -2197,7 +2176,7 @@ export default function Home() {
                     <motion.div
                       initial={{ scaleY: 0 }}
                       whileInView={{ scaleY: 1 }}
-                      viewport={{ once: false, amount: 0.35 }}
+                      viewport={{ once: true, amount: 0.35 }}
                       transition={{ duration: 0.9, ease: "easeOut" }}
                       className="absolute bottom-4 left-5 top-4 w-px origin-top bg-gradient-to-b from-cyan-300 via-purple-400 to-blue-400 shadow-[0_0_22px_rgba(168,85,247,0.45)]"
                     />
@@ -2209,7 +2188,7 @@ export default function Home() {
                           key={item.year}
                           initial={{ opacity: 0, y: 22 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: false, amount: 0.35 }}
+                          viewport={{ once: true, amount: 0.35 }}
                           transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
                           className="relative flex gap-4"
                         >
@@ -2247,7 +2226,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 34 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.55, ease: "easeOut" }}
             >
               <p className="mt-7 max-w-3xl text-xl font-semibold leading-8 text-cyan-100">
@@ -2302,32 +2281,22 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, scale: 0.92, y: 28 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative mx-auto w-full max-w-sm"
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="profile-float relative mx-auto w-full max-w-sm"
             >
-              <motion.div
-                className="absolute inset-4 rounded-full bg-cyan-300/10 blur-3xl"
-                animate={{ opacity: [0.18, 0.34, 0.18], scale: [0.98, 1.04, 0.98] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="relative aspect-square overflow-hidden rounded-full border border-cyan-300/15 bg-[#020617]/25 p-1.5 shadow-[0_0_42px_rgba(34,211,238,0.1)]"
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              >
+              <div className="absolute inset-4 rounded-full bg-cyan-300/10 blur-3xl" />
+              <div className="relative aspect-square overflow-hidden rounded-full border border-cyan-300/15 bg-black p-1.5 shadow-[0_0_42px_rgba(34,211,238,0.1)]">
                 <Image
-                  src="/portfolio-preview.png"
-                  alt="Futuristic S monogram representing AI, cyber security, cloud, development, and data engineering"
-                  width={1254}
-                  height={1254}
-                  quality={72}
-                  className="size-full rounded-full object-cover"
-                  priority={false}
+                  src="/profile.webp"
+                  alt="Sakthi Sri Santh M portrait mark"
+                  width={1080}
+                  height={1080}
+                  quality={80}
+                  sizes="(min-width: 1024px) 24rem, 80vw"
+                  className="size-full rounded-full object-contain"
                 />
-                <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,transparent_56%,rgba(2,6,23,0.35)_100%)]" />
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -2351,7 +2320,7 @@ export default function Home() {
                     key={item.institution}
                     initial={{ opacity: 0, y: index % 2 === 0 ? 42 : -42 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.32 }}
+                    viewport={{ once: true, amount: 0.32 }}
                     transition={{ duration: 0.62, delay: index * 0.1, ease: "easeOut" }}
                     className={`relative grid gap-5 pl-12 md:grid-cols-[1fr_5rem_1fr] md:pl-0 ${index % 2 ? "md:[&_.timeline-card]:col-start-3" : "md:[&_.timeline-card]:col-start-1"}`}
                   >
@@ -2603,10 +2572,8 @@ export default function Home() {
               boxShadow: `0 24px 90px ${internshipTheme.primary}10`,
             }}
           >
-            <motion.div
+            <div
               aria-hidden="true"
-              animate={{ backgroundPosition: ["0px 0px", "54px 54px"] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.045)_1px,transparent_1px)] bg-[size:54px_54px] opacity-60"
             />
             <div className="pointer-events-none absolute -left-24 top-10 size-72 rounded-full blur-3xl" style={{ background: `${internshipTheme.primary}14` }} />
@@ -2634,7 +2601,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     whileHover={{ y: -5, scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
-                    viewport={{ once: false, amount: 0.35 }}
+                    viewport={{ once: true, amount: 0.35 }}
                     transition={{ duration: 0.28, delay: index * 0.06 }}
                     className="group relative overflow-hidden rounded-lg border p-4 text-left backdrop-blur-xl"
                     style={{
@@ -2772,14 +2739,8 @@ export default function Home() {
                         href={activeInternship.proofUrl}
                         target="_blank"
                         rel="noreferrer"
-                        animate={{ y: [0, -5, 0] }}
-                        whileHover={{ y: -8, scale: 1.04, rotateX: 3, rotateY: -3 }}
-                        transition={{
-                          y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                          scale: { duration: 0.22 },
-                          rotateX: { duration: 0.22 },
-                          rotateY: { duration: 0.22 },
-                        }}
+                        whileHover={{ y: -6, scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
                         className="group relative block w-full max-w-full overflow-hidden rounded-lg border bg-white shadow-2xl"
                         style={{
                           borderColor: `${internshipTheme.primary}4d`,
@@ -2789,14 +2750,6 @@ export default function Home() {
                       >
                         <div className="pointer-events-none absolute inset-0 z-10 rounded-lg ring-1 transition" style={{ boxShadow: `inset 0 0 0 1px ${internshipTheme.primary}33` }} />
                         <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-transparent via-white/0 to-white/25 opacity-0 transition duration-300 group-hover:opacity-100" />
-                        {activeInternshipIsCyber ? (
-                          <motion.div
-                            aria-hidden="true"
-                            className="pointer-events-none absolute inset-x-0 z-20 h-16 bg-gradient-to-b from-transparent via-emerald-300/15 to-transparent"
-                            animate={{ top: ["-20%", "105%"] }}
-                            transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
-                          />
-                        ) : null}
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={activeInternship.previewUrl}
@@ -2830,10 +2783,8 @@ export default function Home() {
 
         <section id="projects" className="mx-auto max-w-7xl px-4 py-24 md:px-6">
           <div className="relative overflow-hidden rounded-lg border border-slate-400/15 bg-[linear-gradient(180deg,#020617,#07192f,#0b1220)] p-5 shadow-2xl shadow-cyan-950/20 md:p-8">
-            <motion.div
+            <div
               aria-hidden="true"
-              animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] opacity-50"
             />
             <div className="pointer-events-none absolute -left-28 top-12 size-80 rounded-full bg-cyan-400/10 blur-3xl" />
@@ -2880,7 +2831,7 @@ export default function Home() {
                   key={project.title}
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.18 }}
+                  viewport={{ once: true, amount: 0.18 }}
                   transition={{ duration: 0.32, delay: index * 0.035 }}
                   whileHover={{ y: -8 }}
                   className={`group flex min-w-0 h-full flex-col overflow-hidden rounded-[22px] border bg-[rgba(15,23,42,0.85)] shadow-xl backdrop-blur-xl transition ${index === 0 ? "project-card-featured" : ""}`}
@@ -2978,7 +2929,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0, rotate: 0 }}
                     whileHover={{ y: -5, scale: 1.018 }}
-                    viewport={{ once: false, amount: 0.25 }}
+                    viewport={{ once: true, amount: 0.25 }}
                     transition={{ duration: 0.32, delay: index * 0.025 }}
                     className="group relative min-h-44 overflow-hidden rounded-lg border p-4 text-left shadow-xl backdrop-blur-xl"
                     style={{
@@ -3147,10 +3098,8 @@ export default function Home() {
 
         <section id="achievements" className="mx-auto max-w-7xl px-4 py-24 md:px-6">
           <div className="relative overflow-hidden rounded-lg border border-amber-300/30 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,.12),transparent_35%),linear-gradient(135deg,#020617,#1c1305,#111827)] p-5 shadow-2xl shadow-amber-950/20 md:p-8">
-            <motion.div
+            <div
               aria-hidden="true"
-              animate={{ backgroundPosition: ["0px 0px", "54px 54px"] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(251,191,36,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(245,158,11,0.045)_1px,transparent_1px)] bg-[size:54px_54px] opacity-55"
             />
             <Trophy className="pointer-events-none absolute -right-6 top-2 text-amber-200/5" size={250} />
@@ -3180,7 +3129,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     whileHover={{ y: -5, scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
-                    viewport={{ once: false, amount: 0.35 }}
+                    viewport={{ once: true, amount: 0.35 }}
                     transition={{ duration: 0.28, delay: index * 0.06 }}
                     className="group relative overflow-hidden rounded-lg border p-4 text-left backdrop-blur-xl"
                     style={{
@@ -3278,14 +3227,8 @@ export default function Home() {
                       href={activeAchievement.proofUrl}
                       target="_blank"
                       rel="noreferrer"
-                      animate={{ y: [0, -5, 0] }}
-                      whileHover={{ y: -8, scale: 1.04, rotateX: 3, rotateY: -3 }}
-                      transition={{
-                        y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                        scale: { duration: 0.22 },
-                        rotateX: { duration: 0.22 },
-                        rotateY: { duration: 0.22 },
-                      }}
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
                       className="group relative block w-full max-w-full overflow-hidden rounded-lg border bg-white shadow-2xl"
                       style={{ borderColor: `${activeAchievement.accent}4d`, boxShadow: `0 0 40px ${activeAchievement.accent}24` }}
                     >
@@ -3490,7 +3433,7 @@ export default function Home() {
               >
                 <div className="flex items-center gap-3">
                   <span className="relative block size-11 overflow-hidden rounded-lg border border-cyan-300/25 bg-white">
-                    <Image src={skillIcon("Email")} alt="Email" fill sizes="44px" className="object-contain p-1" />
+                    <Image src={skillIcon("Email")} alt="Email" fill sizes="44px" unoptimized className="object-contain p-1" />
                   </span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">Contact Information</p>
@@ -3516,7 +3459,7 @@ export default function Home() {
                       className="group flex min-w-0 items-center gap-4 px-1 py-4 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-300"
                     >
                       <span className="relative block size-10 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-white transition group-hover:border-cyan-300/35 group-hover:shadow-[0_0_22px_rgba(34,211,238,.18)]">
-                        <Image src={image} alt="" fill sizes="40px" className="object-cover transition group-hover:scale-105" />
+                        <Image src={image} alt="" fill sizes="40px" unoptimized className="object-contain p-1 transition group-hover:scale-105" />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block text-xs font-bold uppercase tracking-[0.18em] text-slate-500 group-hover:text-cyan-300">{label}</span>
@@ -3655,7 +3598,7 @@ export default function Home() {
                     title={label}
                     className="group relative size-11 overflow-hidden rounded-lg border border-white/10 bg-white transition hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_0_22px_rgba(34,211,238,.15)]"
                   >
-                    <Image src={image} alt="" fill sizes="44px" className="object-contain p-1.5 transition group-hover:scale-105" />
+                    <Image src={image} alt="" fill sizes="44px" unoptimized className="object-contain p-1.5 transition group-hover:scale-105" />
                   </a>
                 ))}
               </div>
