@@ -453,10 +453,46 @@ const skillAsset = (time: string) => {
   return availableAssets.has(time) ? `/skill-${time}.png` : "/logo-light.png";
 };
 const linkedinAsset = "/linkedin-icon.png";
+const brandIcon: Record<string, string> = {
+  HTML5: "/skill-icons/html5.png",
+  CSS3: "/skill-icons/css3.png",
+  JavaScript: "/skill-icons/javascript.png",
+  React: "/skill-icons/react.png",
+  "Next.js": "/skill-icons/nextdotjs.png",
+  TypeScript: "/skill-icons/typescript.png",
+  "Tailwind CSS": "/skill-icons/tailwindcss.png",
+  "Framer Motion": "/skill-icons/framer.png",
+  "Node.js": "/skill-icons/nodedotjs.png",
+  FastAPI: "/skill-icons/fastapi.png",
+  "REST APIs": "/skill-icons/swagger.png",
+  Authentication: "/skill-icons/auth0.png",
+  Microservices: "/skill-icons/kubernetes.png",
+  "Spring Boot": "/skill-icons/spring.png",
+  "Express.js": "/skill-icons/express.png",
+  "Database Design": "/skill-icons/database.png",
+  MySQL: "/skill-icons/mysql.png",
+  MongoDB: "/skill-icons/mongodb.png",
+  PostgreSQL: "/skill-icons/postgresql.png",
+  Prisma: "/skill-icons/prisma.png",
+  Docker: "/skill-icons/docker.png",
+  Git: "/skill-icons/git.png",
+  GitHub: "/skill-icons/github.png",
+  Postman: "/skill-icons/postman.png",
+  Figma: "/skill-icons/figma.png",
+  Linux: "/skill-icons/linux.png",
+  AWS: "/skill-icons/amazonwebservices.png",
+  Azure: "/skill-icons/microsoftazure.png",
+  "C++": "/skill-icons/cplusplus.png",
+  Java: "/skill-icons/openjdk.png",
+  "Kali Linux": "/skill-icons/kalilinux.png",
+  Wireshark: "/skill-icons/wireshark.png",
+  Nmap: "/skill-icons/nmap.png",
+  DSA: "/skill-icons/dsa.png",
+};
 const technology = (name: string, descriptor: string, time: string): SkillTechnology => ({
   name,
   descriptor,
-  image: skillAsset(time),
+  image: brandIcon[name] ?? skillAsset(time),
 });
 
 const skillCategories: SkillCategory[] = [
@@ -1371,7 +1407,7 @@ function SkillPanel({ category, index }: { category: SkillCategory; index: numbe
     <motion.article
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
+      viewport={{ once: false, amount: 0.18 }}
       transition={{ duration: 0.7, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className={`skill-panel ${category.gridClass}`}
       style={{ "--skill-accent": category.accent } as React.CSSProperties}
@@ -1382,14 +1418,22 @@ function SkillPanel({ category, index }: { category: SkillCategory; index: numbe
       </div>
 
       <div className="skill-panel-items">
-        {category.items.map((item) => (
-          <div key={`${category.title}-${item.name}`} className="skill-panel-item group/skill">
+        {category.items.map((item, itemIndex) => (
+          <motion.div
+            key={`${category.title}-${item.name}`}
+            className="skill-panel-item group/skill"
+            initial={{ opacity: 0, y: 18, scale: 0.86 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            whileHover={{ y: -8, scale: 1.08 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.35, delay: itemIndex * 0.04, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="skill-panel-icon">
-              <Image src={item.image} alt={`${item.name} technology icon`} width={72} height={72} sizes="72px" className="size-full object-cover" />
+              <Image src={item.image} alt={`${item.name} technology icon`} width={72} height={72} sizes="72px" className="size-full object-contain p-1.5" />
             </div>
             <p>{item.name}</p>
             <span className="skill-panel-tooltip">{item.descriptor}</span>
-          </div>
+          </motion.div>
         ))}
       </div>
     </motion.article>
@@ -1415,7 +1459,7 @@ function TechnologyMarquee() {
             <div key={copy} className="technology-marquee-group" aria-hidden={copy === 1 ? "true" : undefined}>
               {marqueeTechnologies.map((item) => (
                 <div key={`${copy}-${item.name}`} className="technology-marquee-item" title={item.name}>
-                  <Image src={item.image} alt={copy === 0 ? `${item.name} icon` : ""} width={52} height={52} sizes="52px" className="size-full object-cover" />
+                  <Image src={item.image} alt={copy === 0 ? `${item.name} icon` : ""} width={52} height={52} sizes="52px" className="size-full object-contain p-1" />
                 </div>
               ))}
             </div>
