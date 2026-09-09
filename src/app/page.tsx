@@ -437,22 +437,6 @@ const courseworkCategories = [
   },
 ];
 
-const skillAsset = (time: string) => {
-  const availableAssets = new Set([
-    "08_55_24",
-    "08_55_37",
-    "08_55_43",
-    "08_55_59",
-    "08_56_05",
-    "08_56_58",
-    "08_57_03",
-    "08_57_52",
-    "09_00_10",
-  ]);
-
-  return availableAssets.has(time) ? `/skill-${time}.png` : "/logo-light.png";
-};
-const linkedinAsset = "/linkedin-icon.png";
 const brandIcon: Record<string, string> = {
   HTML5: "/skill-icons/html5.png",
   CSS3: "/skill-icons/css3.png",
@@ -485,14 +469,21 @@ const brandIcon: Record<string, string> = {
   "C++": "/skill-icons/cplusplus.png",
   Java: "/skill-icons/openjdk.png",
   "Kali Linux": "/skill-icons/kalilinux.png",
+  "Cyber Security": "/skill-icons/kalilinux.png",
   Wireshark: "/skill-icons/wireshark.png",
   Nmap: "/skill-icons/nmap.png",
   DSA: "/skill-icons/dsa.png",
+  Email: "/skill-icons/gmail.png",
+  Phone: "/skill-icons/phone.png",
+  LinkedIn: "/skill-icons/linkedin.png",
+  LeetCode: "/skill-icons/leetcode.png",
+  Telegram: "/skill-icons/telegram.png",
 };
-const technology = (name: string, descriptor: string, time: string): SkillTechnology => ({
+const skillIcon = (name: string) => brandIcon[name] ?? "/skill-icons/github.png";
+const technology = (name: string, descriptor: string): SkillTechnology => ({
   name,
   descriptor,
-  image: brandIcon[name] ?? skillAsset(time),
+  image: skillIcon(name),
 });
 
 const skillCategories: SkillCategory[] = [
@@ -502,14 +493,14 @@ const skillCategories: SkillCategory[] = [
     accent: "#22d3ee",
     gridClass: "lg:col-span-12",
     items: [
-      technology("HTML5", "Semantic markup", "08_56_24"),
-      technology("CSS3", "Modern styling", "08_56_33"),
-      technology("JavaScript", "Web programming language", "08_56_39"),
-      technology("React", "Component UI library", "08_56_58"),
-      technology("Next.js", "Production React framework", "08_57_03"),
-      technology("TypeScript", "Typed JavaScript", "08_57_10"),
-      technology("Tailwind CSS", "Utility-first styling", "08_57_18"),
-      technology("Framer Motion", "Interface animation", "08_57_24"),
+      technology("HTML5", "Semantic markup"),
+      technology("CSS3", "Modern styling"),
+      technology("JavaScript", "Web programming language"),
+      technology("React", "Component UI library"),
+      technology("Next.js", "Production React framework"),
+      technology("TypeScript", "Typed JavaScript"),
+      technology("Tailwind CSS", "Utility-first styling"),
+      technology("Framer Motion", "Interface animation"),
     ],
   },
   {
@@ -518,13 +509,13 @@ const skillCategories: SkillCategory[] = [
     accent: "#a855f7",
     gridClass: "lg:col-span-12",
     items: [
-      technology("Node.js", "JavaScript runtime", "08_57_34"),
-      technology("FastAPI", "Python API framework", "08_57_52"),
-      technology("REST APIs", "Service integration", "08_58_01"),
-      technology("Authentication", "Identity and access", "08_58_09"),
-      technology("Microservices", "Distributed services", "08_58_17"),
-      technology("Spring Boot", "Java backend framework", "09_01_01"),
-      technology("Express.js", "Node.js web framework", "09_01_09"),
+      technology("Node.js", "JavaScript runtime"),
+      technology("FastAPI", "Python API framework"),
+      technology("REST APIs", "Service integration"),
+      technology("Authentication", "Identity and access"),
+      technology("Microservices", "Distributed services"),
+      technology("Spring Boot", "Java backend framework"),
+      technology("Express.js", "Node.js web framework"),
     ],
   },
   {
@@ -533,11 +524,11 @@ const skillCategories: SkillCategory[] = [
     accent: "#10b981",
     gridClass: "lg:col-span-5",
     items: [
-      technology("Database Design", "Data modeling", "08_58_34"),
-      technology("MySQL", "Relational database", "08_58_41"),
-      technology("MongoDB", "Document database", "08_58_47"),
-      technology("PostgreSQL", "Advanced relational database", "08_59_02"),
-      technology("Prisma", "Type-safe ORM", "08_59_09"),
+      technology("Database Design", "Data modeling"),
+      technology("MySQL", "Relational database"),
+      technology("MongoDB", "Document database"),
+      technology("PostgreSQL", "Advanced relational database"),
+      technology("Prisma", "Type-safe ORM"),
     ],
   },
   {
@@ -546,14 +537,14 @@ const skillCategories: SkillCategory[] = [
     accent: "#f59e0b",
     gridClass: "lg:col-span-7",
     items: [
-      technology("Docker", "Container platform", "08_59_16"),
-      technology("Git", "Version control", "08_59_22"),
-      technology("GitHub", "Code collaboration", "08_59_28"),
-      technology("Postman", "API development", "08_59_35"),
-      technology("Figma", "Interface design", "08_59_43"),
-      technology("Linux", "Operating environment", "08_59_50"),
-      technology("AWS", "Cloud platform", "08_59_56"),
-      technology("Azure", "Cloud services", "09_00_03"),
+      technology("Docker", "Container platform"),
+      technology("Git", "Version control"),
+      technology("GitHub", "Code collaboration"),
+      technology("Postman", "API development"),
+      technology("Figma", "Interface design"),
+      technology("Linux", "Operating environment"),
+      technology("AWS", "Cloud platform"),
+      technology("Azure", "Cloud services"),
     ],
   },
   {
@@ -562,8 +553,8 @@ const skillCategories: SkillCategory[] = [
     accent: "#8b5cf6",
     gridClass: "lg:col-span-4",
     items: [
-      technology("C++", "Systems programming", "09_00_17"),
-      technology("Java", "Object-oriented programming", "09_00_29"),
+      technology("C++", "Systems programming"),
+      technology("Java", "Object-oriented programming"),
     ],
   },
   {
@@ -572,9 +563,9 @@ const skillCategories: SkillCategory[] = [
     accent: "#ef4444",
     gridClass: "lg:col-span-5",
     items: [
-      technology("Kali Linux", "Security testing platform", "09_00_10"),
-      technology("Wireshark", "Network protocol analysis", "09_00_46"),
-      technology("Nmap", "Network discovery", "09_00_54"),
+      technology("Kali Linux", "Security testing platform"),
+      technology("Wireshark", "Network protocol analysis"),
+      technology("Nmap", "Network discovery"),
     ],
   },
   {
@@ -583,7 +574,7 @@ const skillCategories: SkillCategory[] = [
     accent: "#f59e0b",
     gridClass: "lg:col-span-3",
     items: [
-      technology("DSA", "Data structures and algorithms", "09_00_38"),
+      technology("DSA", "Data structures and algorithms"),
     ],
   },
 ];
@@ -1362,41 +1353,41 @@ const contactLinks: ContactLink[] = [
   {
     label: "Email",
     value: "sakthisrisanth98@gmail.com",
-    image: skillAsset("08_55_59"),
+    image: skillIcon("Email"),
     href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com",
     external: true,
   },
   {
     label: "Phone",
     value: "+91 78069 31074",
-    image: skillAsset("08_56_05"),
+    image: skillIcon("Phone"),
     href: "tel:+917806931074",
   },
   {
     label: "LinkedIn",
     value: "linkedin.com/in/sakthi-sri-santh-m-416540290",
-    image: linkedinAsset,
+    image: skillIcon("LinkedIn"),
     href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290",
     external: true,
   },
   {
     label: "GitHub",
     value: "github.com/sakthisrisanth98",
-    image: skillAsset("08_55_24"),
+    image: skillIcon("GitHub"),
     href: "https://github.com/sakthisrisanth98",
     external: true,
   },
   {
     label: "LeetCode",
     value: "leetcode.com/u/sakthisrisanth98",
-    image: skillAsset("08_55_37"),
+    image: skillIcon("LeetCode"),
     href: "https://leetcode.com/u/sakthisrisanth98",
     external: true,
   },
   {
     label: "Telegram",
     value: "t.me/sakthisrisanth",
-    image: skillAsset("08_55_43"),
+    image: skillIcon("Telegram"),
     href: "https://t.me/sakthisrisanth",
     external: true,
   },
@@ -2021,11 +2012,11 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               {[
-                { label: "LinkedIn", image: linkedinAsset, href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290" },
-                { label: "GitHub", image: skillAsset("08_55_24"), href: "https://github.com/sakthisrisanth98" },
-                { label: "Telegram", image: skillAsset("08_55_43"), href: "https://t.me/sakthisrisanth" },
-                { label: "LeetCode", image: skillAsset("08_55_37"), href: "https://leetcode.com/u/sakthisrisanth98" },
-                { label: "Email", image: skillAsset("08_55_59"), href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com" },
+                { label: "LinkedIn", image: skillIcon("LinkedIn"), href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290" },
+                { label: "GitHub", image: skillIcon("GitHub"), href: "https://github.com/sakthisrisanth98" },
+                { label: "Telegram", image: skillIcon("Telegram"), href: "https://t.me/sakthisrisanth" },
+                { label: "LeetCode", image: skillIcon("LeetCode"), href: "https://leetcode.com/u/sakthisrisanth98" },
+                { label: "Email", image: skillIcon("Email"), href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com" },
               ].map(({ label, image, href }) => (
                 <a
                   key={label}
@@ -2036,7 +2027,7 @@ export default function Home() {
                   title={label}
                   className="group relative size-12 overflow-hidden rounded-lg border border-cyan-300/20 bg-white transition hover:-translate-y-1 hover:border-cyan-200/60 hover:shadow-[0_0_24px_rgba(34,211,238,0.22)]"
                 >
-                  <Image src={image} alt="" fill sizes="48px" className="object-cover transition group-hover:scale-105" />
+                  <Image src={image} alt="" fill sizes="48px" className="object-contain p-1.5 transition group-hover:scale-105" />
                 </a>
               ))}
             </div>
@@ -2065,10 +2056,10 @@ export default function Home() {
             <div className="absolute inset-5 rounded-full border border-cyan-300/20" />
             <div className="absolute inset-11 rounded-full border border-purple-300/22" />
             {[
-              { name: "React", image: skillAsset("08_56_58") },
-              { name: "Next.js", image: skillAsset("08_57_03") },
-              { name: "FastAPI", image: skillAsset("08_57_52") },
-              { name: "Cyber Security", image: skillAsset("09_00_10") },
+              { name: "React", image: skillIcon("React") },
+              { name: "Next.js", image: skillIcon("Next.js") },
+              { name: "FastAPI", image: skillIcon("FastAPI") },
+              { name: "Cyber Security", image: skillIcon("Cyber Security") },
             ].map((technology, index) => (
               <motion.span
                 key={technology.name}
@@ -2077,7 +2068,7 @@ export default function Home() {
                 animate={{ y: [0, -7, 0], rotate: [0, index % 2 === 0 ? 3 : -3, 0] }}
                 transition={{ duration: 5.5 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
               >
-                <Image src={technology.image} alt="" fill sizes="56px" className="object-cover" />
+                <Image src={technology.image} alt="" fill sizes="56px" className="object-contain p-1" />
               </motion.span>
             ))}
             <div className="relative grid size-full place-items-center rounded-full p-3 sm:p-5">
@@ -3499,7 +3490,7 @@ export default function Home() {
               >
                 <div className="flex items-center gap-3">
                   <span className="relative block size-11 overflow-hidden rounded-lg border border-cyan-300/25 bg-white">
-                    <Image src={skillAsset("08_55_59")} alt="Email" fill sizes="44px" className="object-cover" />
+                    <Image src={skillIcon("Email")} alt="Email" fill sizes="44px" className="object-contain p-1" />
                   </span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">Contact Information</p>
@@ -3649,11 +3640,11 @@ export default function Home() {
               <p className="text-xs font-black uppercase tracking-[0.24em] text-purple-300">Connect</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 {[
-                  { label: "GitHub", href: "https://github.com/sakthisrisanth98", image: skillAsset("08_55_24") },
-                  { label: "LinkedIn", href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290", image: linkedinAsset },
-                  { label: "Telegram", href: "https://t.me/sakthisrisanth", image: skillAsset("08_55_43") },
-                  { label: "LeetCode", href: "https://leetcode.com/u/sakthisrisanth98", image: skillAsset("08_55_37") },
-                  { label: "Email", href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com", image: skillAsset("08_55_59") },
+                  { label: "GitHub", href: "https://github.com/sakthisrisanth98", image: skillIcon("GitHub") },
+                  { label: "LinkedIn", href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290", image: skillIcon("LinkedIn") },
+                  { label: "Telegram", href: "https://t.me/sakthisrisanth", image: skillIcon("Telegram") },
+                  { label: "LeetCode", href: "https://leetcode.com/u/sakthisrisanth98", image: skillIcon("LeetCode") },
+                  { label: "Email", href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com", image: skillIcon("Email") },
                 ].map(({ label, href, image }) => (
                   <a
                     key={label}
@@ -3664,7 +3655,7 @@ export default function Home() {
                     title={label}
                     className="group relative size-11 overflow-hidden rounded-lg border border-white/10 bg-white transition hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_0_22px_rgba(34,211,238,.15)]"
                   >
-                    <Image src={image} alt="" fill sizes="44px" className="object-cover transition group-hover:scale-105" />
+                    <Image src={image} alt="" fill sizes="44px" className="object-contain p-1.5 transition group-hover:scale-105" />
                   </a>
                 ))}
               </div>
