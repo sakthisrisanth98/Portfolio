@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Data Structures">
+  <rect x="4" y="4" width="6" height="6" rx="1.2" fill="#8B5CF6"/>
+  <rect x="14" y="4" width="6" height="6" rx="1.2" fill="#22D3EE"/>
+  <rect x="9" y="14" width="6" height="6" rx="1.2" fill="#F59E0B"/>
+  <path d="M7 10v2.5h10V10" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+  <path d="M12 12.5V14" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+</svg>

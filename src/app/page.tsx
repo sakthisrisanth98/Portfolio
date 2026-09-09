@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
 import {
@@ -32,7 +34,7 @@ import {
   Trophy,
   X,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 type Project = {
@@ -437,26 +439,55 @@ const courseworkCategories = [
   },
 ];
 
-const skillAsset = (time: string) => {
-  const availableAssets = new Set([
-    "08_55_24",
-    "08_55_37",
-    "08_55_43",
-    "08_55_59",
-    "08_56_05",
-    "08_56_58",
-    "08_57_03",
-    "08_57_52",
-    "09_00_10",
-  ]);
-
-  return availableAssets.has(time) ? `/skill-${time}.png` : "/logo-light.png";
+const skillIcons: Record<string, string> = {
+  HTML5: "/icons/html5.svg",
+  CSS3: "/icons/css3.svg",
+  JavaScript: "/icons/javascript.svg",
+  React: "/icons/react.svg",
+  "Next.js": "/icons/nextdotjs.svg",
+  TypeScript: "/icons/typescript.svg",
+  "Tailwind CSS": "/icons/tailwindcss.svg",
+  "Framer Motion": "/icons/framer.svg",
+  "Node.js": "/icons/nodedotjs.svg",
+  FastAPI: "/icons/fastapi.svg",
+  "REST APIs": "/icons/swagger.svg",
+  Authentication: "/icons/auth0.svg",
+  Microservices: "/icons/kubernetes.svg",
+  "Spring Boot": "/icons/spring.svg",
+  "Express.js": "/icons/express.svg",
+  "Database Design": "/icons/database.svg",
+  MySQL: "/icons/mysql.svg",
+  MongoDB: "/icons/mongodb.svg",
+  PostgreSQL: "/icons/postgresql.svg",
+  Prisma: "/icons/prisma.svg",
+  Docker: "/icons/docker.svg",
+  Git: "/icons/git.svg",
+  GitHub: "/icons/github.svg",
+  Postman: "/icons/postman.svg",
+  Figma: "/icons/figma.svg",
+  Linux: "/icons/linux.svg",
+  AWS: "/icons/amazonwebservices.svg",
+  Azure: "/icons/microsoftazure.svg",
+  "C++": "/icons/cplusplus.svg",
+  Java: "/icons/openjdk.svg",
+  "Kali Linux": "/icons/kalilinux.svg",
+  Wireshark: "/icons/wireshark.svg",
+  Nmap: "/icons/nmap.svg",
+  DSA: "/icons/dsa.svg",
+  Email: "/icons/gmail.svg",
+  Phone: "/icons/phone.svg",
+  LinkedIn: "/icons/linkedin.svg",
+  LeetCode: "/icons/leetcode.svg",
+  Telegram: "/icons/telegram.svg",
+  "Cyber Security": "/icons/kalilinux.svg",
 };
-const linkedinAsset = "/linkedin-icon.png";
-const technology = (name: string, descriptor: string, time: string): SkillTechnology => ({
+
+const skillIcon = (name: string) => skillIcons[name] ?? "/icons/github.svg";
+
+const technology = (name: string, descriptor: string): SkillTechnology => ({
   name,
   descriptor,
-  image: skillAsset(time),
+  image: skillIcon(name),
 });
 
 const skillCategories: SkillCategory[] = [
@@ -466,14 +497,14 @@ const skillCategories: SkillCategory[] = [
     accent: "#22d3ee",
     gridClass: "lg:col-span-12",
     items: [
-      technology("HTML5", "Semantic markup", "08_56_24"),
-      technology("CSS3", "Modern styling", "08_56_33"),
-      technology("JavaScript", "Web programming language", "08_56_39"),
-      technology("React", "Component UI library", "08_56_58"),
-      technology("Next.js", "Production React framework", "08_57_03"),
-      technology("TypeScript", "Typed JavaScript", "08_57_10"),
-      technology("Tailwind CSS", "Utility-first styling", "08_57_18"),
-      technology("Framer Motion", "Interface animation", "08_57_24"),
+      technology("HTML5", "Semantic markup"),
+      technology("CSS3", "Modern styling"),
+      technology("JavaScript", "Web programming language"),
+      technology("React", "Component UI library"),
+      technology("Next.js", "Production React framework"),
+      technology("TypeScript", "Typed JavaScript"),
+      technology("Tailwind CSS", "Utility-first styling"),
+      technology("Framer Motion", "Interface animation"),
     ],
   },
   {
@@ -482,13 +513,13 @@ const skillCategories: SkillCategory[] = [
     accent: "#a855f7",
     gridClass: "lg:col-span-12",
     items: [
-      technology("Node.js", "JavaScript runtime", "08_57_34"),
-      technology("FastAPI", "Python API framework", "08_57_52"),
-      technology("REST APIs", "Service integration", "08_58_01"),
-      technology("Authentication", "Identity and access", "08_58_09"),
-      technology("Microservices", "Distributed services", "08_58_17"),
-      technology("Spring Boot", "Java backend framework", "09_01_01"),
-      technology("Express.js", "Node.js web framework", "09_01_09"),
+      technology("Node.js", "JavaScript runtime"),
+      technology("FastAPI", "Python API framework"),
+      technology("REST APIs", "Service integration"),
+      technology("Authentication", "Identity and access"),
+      technology("Microservices", "Distributed services"),
+      technology("Spring Boot", "Java backend framework"),
+      technology("Express.js", "Node.js web framework"),
     ],
   },
   {
@@ -497,11 +528,11 @@ const skillCategories: SkillCategory[] = [
     accent: "#10b981",
     gridClass: "lg:col-span-5",
     items: [
-      technology("Database Design", "Data modeling", "08_58_34"),
-      technology("MySQL", "Relational database", "08_58_41"),
-      technology("MongoDB", "Document database", "08_58_47"),
-      technology("PostgreSQL", "Advanced relational database", "08_59_02"),
-      technology("Prisma", "Type-safe ORM", "08_59_09"),
+      technology("Database Design", "Data modeling"),
+      technology("MySQL", "Relational database"),
+      technology("MongoDB", "Document database"),
+      technology("PostgreSQL", "Advanced relational database"),
+      technology("Prisma", "Type-safe ORM"),
     ],
   },
   {
@@ -510,14 +541,14 @@ const skillCategories: SkillCategory[] = [
     accent: "#f59e0b",
     gridClass: "lg:col-span-7",
     items: [
-      technology("Docker", "Container platform", "08_59_16"),
-      technology("Git", "Version control", "08_59_22"),
-      technology("GitHub", "Code collaboration", "08_59_28"),
-      technology("Postman", "API development", "08_59_35"),
-      technology("Figma", "Interface design", "08_59_43"),
-      technology("Linux", "Operating environment", "08_59_50"),
-      technology("AWS", "Cloud platform", "08_59_56"),
-      technology("Azure", "Cloud services", "09_00_03"),
+      technology("Docker", "Container platform"),
+      technology("Git", "Version control"),
+      technology("GitHub", "Code collaboration"),
+      technology("Postman", "API development"),
+      technology("Figma", "Interface design"),
+      technology("Linux", "Operating environment"),
+      technology("AWS", "Cloud platform"),
+      technology("Azure", "Cloud services"),
     ],
   },
   {
@@ -526,8 +557,8 @@ const skillCategories: SkillCategory[] = [
     accent: "#8b5cf6",
     gridClass: "lg:col-span-4",
     items: [
-      technology("C++", "Systems programming", "09_00_17"),
-      technology("Java", "Object-oriented programming", "09_00_29"),
+      technology("C++", "Systems programming"),
+      technology("Java", "Object-oriented programming"),
     ],
   },
   {
@@ -536,9 +567,9 @@ const skillCategories: SkillCategory[] = [
     accent: "#ef4444",
     gridClass: "lg:col-span-5",
     items: [
-      technology("Kali Linux", "Security testing platform", "09_00_10"),
-      technology("Wireshark", "Network protocol analysis", "09_00_46"),
-      technology("Nmap", "Network discovery", "09_00_54"),
+      technology("Kali Linux", "Security testing platform"),
+      technology("Wireshark", "Network protocol analysis"),
+      technology("Nmap", "Network discovery"),
     ],
   },
   {
@@ -547,7 +578,7 @@ const skillCategories: SkillCategory[] = [
     accent: "#f59e0b",
     gridClass: "lg:col-span-3",
     items: [
-      technology("DSA", "Data structures and algorithms", "09_00_38"),
+      technology("DSA", "Data structures and algorithms"),
     ],
   },
 ];
@@ -686,7 +717,7 @@ const projects: Project[] = [
     gallery: ["Library", "Watch Flow", "Episode Grid", "Mobile View"],
     stack: ["Next.js 15", "React", "Media UI", "Responsive Design"],
     status: "Live",
-    image: "/projects/project-205627.png",
+    image: "/project-shots/project-205627.webp",
     accent: "#ec4899",
     accentTwo: "#a855f7",
     liveUrl: "https://animez-plum.vercel.app",
@@ -709,7 +740,7 @@ const projects: Project[] = [
     stack: ["Phaser 3", "JavaScript", "Game UI", "Responsive Controls", "Missions"],
     gallery: ["Run", "Shop", "Boss Battle", "Missions", "Rewards"],
     status: "Live",
-    image: "/projects/project-205753.png",
+    image: "/project-shots/project-205753.webp",
     accent: "#8b5cf6",
     accentTwo: "#2563eb",
     liveUrl: "https://astrovelo-space-survival-game.vercel.app",
@@ -732,7 +763,7 @@ const projects: Project[] = [
     gallery: ["Chat", "Research", "Files", "Image Tools", "Memory"],
     stack: ["Next.js", "Prisma", "MySQL", "Gemini", "File Upload", "Voice"],
     status: "Live",
-    image: "/projects/project-210330.png",
+    image: "/project-shots/project-210330.webp",
     accent: "#22d3ee",
     accentTwo: "#8b5cf6",
     liveUrl: "https://limitra-ai.vercel.app",
@@ -755,7 +786,7 @@ const projects: Project[] = [
     gallery: ["Storefront", "Seller", "Admin", "Orders", "Analytics"],
     stack: ["Next.js", "Marketplace", "Dashboards", "Cart", "Orders", "Analytics"],
     status: "Live",
-    image: "/projects/project-210410.png",
+    image: "/project-shots/project-210410.webp",
     accent: "#3b82f6",
     accentTwo: "#10b981",
     liveUrl: "https://nexmart-ebon.vercel.app",
@@ -778,7 +809,7 @@ const projects: Project[] = [
     gallery: ["Upload", "Crop", "Restore", "Convert", "Export"],
     stack: ["Next.js", "FastAPI", "OpenCV", "Pillow", "JSZip", "Real-ESRGAN"],
     status: "Live",
-    image: "/projects/project-210436.png",
+    image: "/project-shots/project-210436.webp",
     accent: "#84cc16",
     accentTwo: "#06b6d4",
     liveUrl: "https://cropix-ai.vercel.app",
@@ -800,7 +831,7 @@ const projects: Project[] = [
     gallery: ["Overview", "Containers", "Threat Intel", "Reports", "Network"],
     stack: ["Flask", "SOC Dashboard", "Honeypots", "Threat Globe", "RBAC", "Reports"],
     status: "Local / Case Study",
-    image: "/projects/project-192632.png",
+    image: "/project-shots/project-192632.webp",
     accent: "#ef4444",
     accentTwo: "#22c55e",
     githubUrl: "https://github.com/sakthisrisanth98/Aegistmd",
@@ -821,7 +852,7 @@ const projects: Project[] = [
     gallery: ["Extension Popup", "Risk View", "Domain Intel", "Alerts", "Settings"],
     stack: ["Chrome Extension", "AI Privacy", "Risk Scoring", "Domain Intelligence", "Security UX"],
     status: "Local / Case Study",
-    image: "/projects/project-webguard.png",
+    image: "/project-shots/project-webguard.webp",
     accent: "#10b981",
     accentTwo: "#14b8a6",
     githubUrl: "https://github.com/sakthisrisanth98/WebGuard---Extension",
@@ -1326,41 +1357,41 @@ const contactLinks: ContactLink[] = [
   {
     label: "Email",
     value: "sakthisrisanth98@gmail.com",
-    image: skillAsset("08_55_59"),
+    image: skillIcon("Email"),
     href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com",
     external: true,
   },
   {
     label: "Phone",
     value: "+91 78069 31074",
-    image: skillAsset("08_56_05"),
+    image: skillIcon("Phone"),
     href: "tel:+917806931074",
   },
   {
     label: "LinkedIn",
     value: "linkedin.com/in/sakthi-sri-santh-m-416540290",
-    image: linkedinAsset,
+    image: skillIcon("LinkedIn"),
     href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290",
     external: true,
   },
   {
     label: "GitHub",
     value: "github.com/sakthisrisanth98",
-    image: skillAsset("08_55_24"),
+    image: skillIcon("GitHub"),
     href: "https://github.com/sakthisrisanth98",
     external: true,
   },
   {
     label: "LeetCode",
     value: "leetcode.com/u/sakthisrisanth98",
-    image: skillAsset("08_55_37"),
+    image: skillIcon("LeetCode"),
     href: "https://leetcode.com/u/sakthisrisanth98",
     external: true,
   },
   {
     label: "Telegram",
     value: "t.me/sakthisrisanth",
-    image: skillAsset("08_55_43"),
+    image: skillIcon("Telegram"),
     href: "https://t.me/sakthisrisanth",
     external: true,
   },
@@ -1368,7 +1399,7 @@ const contactLinks: ContactLink[] = [
 
 function SkillPanel({ category, index }: { category: SkillCategory; index: number }) {
   return (
-    <motion.article
+    <m.article
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.18 }}
@@ -1385,20 +1416,20 @@ function SkillPanel({ category, index }: { category: SkillCategory; index: numbe
         {category.items.map((item) => (
           <div key={`${category.title}-${item.name}`} className="skill-panel-item group/skill">
             <div className="skill-panel-icon">
-              <Image src={item.image} alt={`${item.name} technology icon`} width={72} height={72} sizes="72px" className="size-full object-cover" />
+              <img src={item.image} alt={`${item.name} technology icon`} width={72} height={72} className="size-full object-contain p-2" loading="lazy" decoding="async" />
             </div>
             <p>{item.name}</p>
             <span className="skill-panel-tooltip">{item.descriptor}</span>
           </div>
         ))}
       </div>
-    </motion.article>
+    </m.article>
   );
 }
 
 function TechnologyMarquee() {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.35 }}
@@ -1415,29 +1446,30 @@ function TechnologyMarquee() {
             <div key={copy} className="technology-marquee-group" aria-hidden={copy === 1 ? "true" : undefined}>
               {marqueeTechnologies.map((item) => (
                 <div key={`${copy}-${item.name}`} className="technology-marquee-item" title={item.name}>
-                  <Image src={item.image} alt={copy === 0 ? `${item.name} icon` : ""} width={52} height={52} sizes="52px" className="size-full object-cover" />
+                  <img src={item.image} alt={copy === 0 ? `${item.name} icon` : ""} width={52} height={52} className="size-full object-contain p-1.5" loading="lazy" decoding="async" />
                 </div>
               ))}
             </div>
           ))}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
 function ProjectVisual({ project, variant = "card" }: { project: Project; variant?: "stage" | "card" | "modal" }) {
   const isStage = variant === "stage";
   const isModal = variant === "modal";
-  const heightClass = isModal ? "min-h-0" : isStage ? "h-full min-h-[24rem]" : "h-full";
+  const heightClass = isModal ? "min-h-[20rem]" : isStage ? "h-full min-h-[24rem]" : "h-full min-h-[15rem]";
 
   return (
-    <div className={`${heightClass} min-w-0 overflow-hidden rounded-md bg-[#020617]`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+    <div className={`relative ${heightClass} min-w-0 overflow-hidden rounded-md bg-[#020617]`}>
+      <Image
         src={project.image}
         alt={`${project.title} screenshot`}
-        className={`${isModal ? "h-auto max-h-[68vh] w-full max-w-full object-contain" : "h-full w-full min-w-0 object-cover"} transition duration-700 group-hover:scale-105`}
+        fill
+        sizes={isModal ? "(min-width: 1280px) 70vw, 94vw" : "(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 100vw"}
+        className={`${isModal ? "object-contain" : "object-cover"} transition duration-500 group-hover:scale-[1.03]`}
       />
     </div>
   );
@@ -1489,7 +1521,7 @@ function ProjectModal({ project, children }: { project: Project; children?: Reac
                 ["Architecture", project.architecture],
                 ["Outcome", project.impact],
               ].map(([label, text], index) => (
-                <motion.div
+                <m.div
                   key={label}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -1498,7 +1530,7 @@ function ProjectModal({ project, children }: { project: Project; children?: Reac
                 >
                   <h3 className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: project.accent }}>{label}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-300">{text}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
 
@@ -1562,7 +1594,7 @@ function ProofModal({ item, label = "View Proof", compact = false }: { item: Pro
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <motion.button
+        <m.button
           type="button"
           whileTap={{ scale: 0.97 }}
           className={`${compact ? "w-full min-w-0 px-4" : "min-w-[11.5rem] px-5"} inline-flex h-12 items-center justify-center gap-2.5 whitespace-nowrap rounded-md text-sm font-black text-slate-950 transition hover:-translate-y-0.5 hover:brightness-110`}
@@ -1570,7 +1602,7 @@ function ProofModal({ item, label = "View Proof", compact = false }: { item: Pro
         >
           <Eye size={17} className="shrink-0" />
           {label}
-        </motion.button>
+        </m.button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm" />
@@ -1588,8 +1620,7 @@ function ProofModal({ item, label = "View Proof", compact = false }: { item: Pro
             </Dialog.Close>
           </div>
           <div className="mt-6 grid place-items-center rounded-lg bg-black/25 p-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={item.previewUrl} alt={`${item.title} proof preview`} className="max-h-[70vh] max-w-full rounded-sm bg-white object-contain" />
+            <img src={item.previewUrl} alt={`${item.title} proof preview`} loading="lazy" decoding="async" className="max-h-[70vh] max-w-full rounded-sm bg-white object-contain" />
           </div>
           <div className="mt-5 flex flex-wrap gap-3">
             <a href={item.proofUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-black text-slate-950" style={{ background: item.accent }}>
@@ -1863,6 +1894,7 @@ export default function Home() {
   const sectionClass = theme === "dark" ? "portfolio-dark bg-[#050816] text-white" : "portfolio-light bg-white text-slate-950";
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <main className={`${sectionClass} min-h-screen overflow-x-hidden selection:bg-cyan-300 selection:text-slate-950`}>
       <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-5 md:pt-4">
         <nav className={`mx-auto flex max-w-[1540px] items-center justify-between rounded-xl border px-4 py-3 backdrop-blur-2xl transition-colors duration-300 md:px-5 ${theme === "dark" ? "border-cyan-300/15 bg-[#07101f]/88 shadow-[0_18px_55px_rgba(0,0,0,.32),0_0_30px_rgba(34,211,238,.04)]" : "border-slate-200 bg-white/90 shadow-[0_16px_45px_rgba(15,23,42,.12)]"}`}>
@@ -1876,7 +1908,7 @@ export default function Home() {
             aria-label="Sakthi.dev home"
           >
             <Image
-              src={theme === "dark" ? "/logo-dark.png" : "/logo-light.png"}
+              src={theme === "dark" ? "/logo-dark.webp" : "/logo-light.webp"}
               alt="Sakthi.dev"
               fill
               priority
@@ -1957,7 +1989,7 @@ export default function Home() {
       </header>
 
       <section id="home" className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-10 px-4 py-18 md:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 xl:gap-12">
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+          <m.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <p className="text-xl font-medium text-cyan-100 md:text-2xl">My Name is</p>
             <h1 className="mt-4 max-w-5xl whitespace-nowrap text-[clamp(1.75rem,4.8vw,5rem)] font-black uppercase leading-[0.95] tracking-[-0.04em] text-white drop-shadow-[0_0_24px_rgba(34,211,238,0.16)]">
               Sakthi Sri <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-purple-200">Santh M</span>
@@ -1975,11 +2007,11 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               {[
-                { label: "LinkedIn", image: linkedinAsset, href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290" },
-                { label: "GitHub", image: skillAsset("08_55_24"), href: "https://github.com/sakthisrisanth98" },
-                { label: "Telegram", image: skillAsset("08_55_43"), href: "https://t.me/sakthisrisanth" },
-                { label: "LeetCode", image: skillAsset("08_55_37"), href: "https://leetcode.com/u/sakthisrisanth98" },
-                { label: "Email", image: skillAsset("08_55_59"), href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com" },
+                { label: "LinkedIn", image: skillIcon("LinkedIn"), href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290" },
+                { label: "GitHub", image: skillIcon("GitHub"), href: "https://github.com/sakthisrisanth98" },
+                { label: "Telegram", image: skillIcon("Telegram"), href: "https://t.me/sakthisrisanth" },
+                { label: "LeetCode", image: skillIcon("LeetCode"), href: "https://leetcode.com/u/sakthisrisanth98" },
+                { label: "Email", image: skillIcon("Email"), href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com" },
               ].map(({ label, image, href }) => (
                 <a
                   key={label}
@@ -1990,12 +2022,12 @@ export default function Home() {
                   title={label}
                   className="group relative size-12 overflow-hidden rounded-lg border border-cyan-300/20 bg-white transition hover:-translate-y-1 hover:border-cyan-200/60 hover:shadow-[0_0_24px_rgba(34,211,238,0.22)]"
                 >
-                  <Image src={image} alt="" fill sizes="48px" className="object-cover transition group-hover:scale-105" />
+                  <img src={image} alt="" className="size-full object-contain p-1.5 transition group-hover:scale-105" loading="lazy" decoding="async" />
                 </a>
               ))}
             </div>
             <div className="mt-10 flex flex-wrap gap-4">
-              <a href="#resume" className="inline-flex items-center gap-2 rounded-md border border-cyan-300/22 bg-transparent px-5 py-3 font-bold text-cyan-100 transition hover:-translate-y-1 hover:border-cyan-200/75 hover:text-white hover:shadow-[0_0_26px_rgba(34,211,238,0.2)]">
+              <a href="/Resume.pdf" download="Sakthi-Sri-Santh-M-Resume.pdf" className="inline-flex items-center gap-2 rounded-md border border-cyan-300/22 bg-transparent px-5 py-3 font-bold text-cyan-100 transition hover:-translate-y-1 hover:border-cyan-200/75 hover:text-white hover:shadow-[0_0_26px_rgba(34,211,238,0.2)]">
                 <Download size={18} />
                 Download Resume
               </a>
@@ -2004,35 +2036,29 @@ export default function Home() {
                 View Projects
               </a>
             </div>
-          </motion.div>
-          <motion.div
+          </m.div>
+          <m.div
             className="relative mx-auto aspect-square w-full max-w-[32rem] sm:max-w-[38rem] lg:max-w-[43rem] xl:max-w-[46rem]"
             initial={{ opacity: 0, x: 36, scale: 0.94 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.18, ease: "easeOut" }}
           >
-            <motion.div
-              className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-300/30 via-blue-500/16 to-purple-500/28 blur-2xl"
-              animate={{ scale: [1, 1.025, 1], opacity: [0.18, 0.28, 0.18] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-300/30 via-blue-500/16 to-purple-500/28 blur-2xl opacity-25" />
             <div className="absolute inset-5 rounded-full border border-cyan-300/20" />
             <div className="absolute inset-11 rounded-full border border-purple-300/22" />
             {[
-              { name: "React", image: skillAsset("08_56_58") },
-              { name: "Next.js", image: skillAsset("08_57_03") },
-              { name: "FastAPI", image: skillAsset("08_57_52") },
-              { name: "Cyber Security", image: skillAsset("09_00_10") },
+              { name: "React", image: skillIcon("React") },
+              { name: "Next.js", image: skillIcon("Next.js") },
+              { name: "FastAPI", image: skillIcon("FastAPI") },
+              { name: "Cyber Security", image: skillIcon("Cyber Security") },
             ].map((technology, index) => (
-              <motion.span
+              <span
                 key={technology.name}
                 aria-hidden="true"
                 className={`hero-orbit-icon hero-orbit-icon-${index + 1}`}
-                animate={{ y: [0, -7, 0], rotate: [0, index % 2 === 0 ? 3 : -3, 0] }}
-                transition={{ duration: 5.5 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
               >
-                <Image src={technology.image} alt="" fill sizes="56px" className="object-cover" />
-              </motion.span>
+                <img src={technology.image} alt="" className="size-full object-contain p-1" loading="lazy" decoding="async" />
+              </span>
             ))}
             <div className="relative grid size-full place-items-center rounded-full p-3 sm:p-5">
               <div className="grid size-[91%] place-items-center rounded-full bg-gradient-to-br from-cyan-200 via-blue-500 to-purple-400 p-[2px] shadow-[0_30px_90px_rgba(34,211,238,0.16),0_28px_80px_rgba(2,6,23,0.52)]">
@@ -2049,17 +2075,17 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </section>
 
       <div className="relative">
         <section id="summary" className="relative mx-auto max-w-7xl px-4 py-20 md:px-6">
           <div className="pointer-events-none absolute left-1/2 top-24 h-80 w-80 -translate-x-1/2 rounded-full bg-cyan-400/8 blur-3xl" />
           <div className="mx-auto max-w-7xl">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.35 }}
+              viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.65, ease: "easeOut" }}
               className="mx-auto mb-14 max-w-4xl text-center"
             >
@@ -2068,13 +2094,13 @@ export default function Home() {
                 Professional Summary
               </h2>
               <div className="mx-auto mt-6 h-px w-40 bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500" />
-            </motion.div>
+            </m.div>
 
             <div className="grid items-start gap-10 lg:grid-cols-[1.45fr_0.95fr] xl:gap-12">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.34 }}
+                viewport={{ once: true, amount: 0.34 }}
                 transition={{ duration: 0.75, ease: "easeOut" }}
               >
                 <h3 className="max-w-5xl bg-gradient-to-r from-white via-cyan-200 via-45% to-purple-400 bg-clip-text font-serif text-3xl font-black leading-tight tracking-tight text-transparent md:text-5xl">
@@ -2098,18 +2124,18 @@ export default function Home() {
                       const Icon = strengthIcons[index] ?? Sparkles;
 
                       return (
-                      <motion.div
+                      <m.div
                         key={strength}
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, amount: 0.4 }}
+                        viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.35, delay: index * 0.06, ease: "easeOut" }}
                         whileHover={{ y: -3 }}
                         className="rounded-lg border border-cyan-300/12 bg-[#07192f]/24 p-4 text-center transition hover:border-purple-300/25"
                       >
                         <Icon className="mx-auto text-cyan-300" size={26} />
                         <p className="mt-3 text-sm font-bold leading-5 text-slate-200">{strength}</p>
-                      </motion.div>
+                      </m.div>
                       );
                     })}
                   </div>
@@ -2119,26 +2145,26 @@ export default function Home() {
                   <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan-300">Products I Have Built</p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {proofProjects.map((project, index) => (
-                      <motion.span
+                      <m.span
                         key={project}
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, amount: 0.4 }}
+                        viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.35, delay: index * 0.045, ease: "easeOut" }}
                         whileHover={{ y: -3 }}
                         className="rounded-md border border-purple-300/14 bg-[#07192f]/22 px-3 py-2 text-sm font-bold text-slate-300 transition hover:border-cyan-300/30 hover:text-white"
                       >
                         {project}
-                      </motion.span>
+                      </m.span>
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
 
-              <motion.aside
+              <m.aside
                 initial={{ opacity: 0, x: 28 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, amount: 0.35 }}
+                viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
                 className="relative lg:pt-1"
               >
@@ -2156,10 +2182,10 @@ export default function Home() {
                   </div>
 
                   <div className="relative mt-8 space-y-6">
-                    <motion.div
+                    <m.div
                       initial={{ scaleY: 0 }}
                       whileInView={{ scaleY: 1 }}
-                      viewport={{ once: false, amount: 0.35 }}
+                      viewport={{ once: true, amount: 0.35 }}
                       transition={{ duration: 0.9, ease: "easeOut" }}
                       className="absolute bottom-4 left-5 top-4 w-px origin-top bg-gradient-to-b from-cyan-300 via-purple-400 to-blue-400 shadow-[0_0_22px_rgba(168,85,247,0.45)]"
                     />
@@ -2167,31 +2193,31 @@ export default function Home() {
                       const Icon = item.icon;
 
                       return (
-                        <motion.div
+                        <m.div
                           key={item.year}
                           initial={{ opacity: 0, y: 22 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: false, amount: 0.35 }}
+                          viewport={{ once: true, amount: 0.35 }}
                           transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
                           className="relative flex gap-4"
                         >
-                          <motion.span
+                          <m.span
                             whileHover={{ scale: 1.08 }}
                             className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full border bg-[#07192f]"
                             style={{ borderColor: `${item.accent}70`, color: item.accent, boxShadow: `0 0 24px ${item.accent}24` }}
                           >
                             <Icon size={18} />
-                          </motion.span>
+                          </m.span>
                           <div className="min-w-0 flex-1 rounded-md border border-white/8 bg-black/10 px-4 py-3 transition hover:border-cyan-300/20 hover:bg-white/[0.035]">
                             <p className="font-mono text-sm font-black" style={{ color: item.accent }}>{item.year}</p>
                             <p className="mt-1 text-sm font-semibold leading-6 text-slate-300">{item.title}</p>
                           </div>
-                        </motion.div>
+                        </m.div>
                       );
                     })}
                   </div>
                 </div>
-              </motion.aside>
+              </m.aside>
             </div>
           </div>
         </section>
@@ -2206,10 +2232,10 @@ export default function Home() {
           </div>
 
           <div className="grid items-center gap-14 lg:grid-cols-[1.55fr_0.85fr]">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 34 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.55, ease: "easeOut" }}
             >
               <p className="mt-7 max-w-3xl text-xl font-semibold leading-8 text-cyan-100">
@@ -2240,7 +2266,7 @@ export default function Home() {
                   ["Projects", "10+ Projects Built", Code2, "cyan"],
                   ["Certifications", "72+ Certifications", Award, "purple"],
                 ].map(([label, value, Icon, tone]) => (
-                  <motion.div
+                  <m.div
                     key={label as string}
                     whileHover={{ y: -4, scale: 1.02 }}
                     className={`group flex items-start gap-3 rounded-md border px-4 py-4 ${
@@ -2256,31 +2282,22 @@ export default function Home() {
                       <span className="block text-[0.65rem] font-black uppercase tracking-[0.22em] text-slate-400">{label as string}</span>
                       <span className="mt-1 block text-sm font-black leading-5 text-slate-100">{value as string}</span>
                     </span>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.92, y: 28 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="relative mx-auto w-full max-w-sm"
             >
-              <motion.div
-                className="absolute inset-4 rounded-full bg-cyan-300/10 blur-3xl"
-                animate={{ opacity: [0.18, 0.34, 0.18], scale: [0.98, 1.04, 0.98] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="relative aspect-square overflow-hidden rounded-full border border-cyan-300/15 bg-[#020617]/25 p-1.5 shadow-[0_0_42px_rgba(34,211,238,0.1)]"
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              >
+              <div className="absolute inset-4 rounded-full bg-cyan-300/10 blur-3xl" />
+              <div className="relative aspect-square overflow-hidden rounded-full border border-cyan-300/15 bg-[#020617]/25 p-1.5 shadow-[0_0_42px_rgba(34,211,238,0.1)]">
                 <Image
-                  src="/portfolio-preview.png"
+                  src="/portfolio-preview.webp"
                   alt="Futuristic S monogram representing AI, cyber security, cloud, development, and data engineering"
                   width={1254}
                   height={1254}
@@ -2288,8 +2305,8 @@ export default function Home() {
                   priority={false}
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,transparent_56%,rgba(2,6,23,0.35)_100%)]" />
-              </motion.div>
-            </motion.div>
+              </div>
+            </m.div>
           </div>
         </section>
 
@@ -2308,11 +2325,11 @@ export default function Home() {
               <div className="absolute left-5 top-0 h-full w-px bg-gradient-to-b from-cyan-300 via-purple-400 to-blue-500 shadow-[0_0_24px_rgba(168,85,247,0.65)] md:left-1/2" />
               <div className="space-y-10">
                 {education.map((item, index) => (
-                  <motion.article
+                  <m.article
                     key={item.institution}
                     initial={{ opacity: 0, y: index % 2 === 0 ? 42 : -42 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.32 }}
+                    viewport={{ once: true, amount: 0.32 }}
                     transition={{ duration: 0.62, delay: index * 0.1, ease: "easeOut" }}
                     className={`relative grid gap-5 pl-12 md:grid-cols-[1fr_5rem_1fr] md:pl-0 ${index % 2 ? "md:[&_.timeline-card]:col-start-3" : "md:[&_.timeline-card]:col-start-1"}`}
                   >
@@ -2332,7 +2349,7 @@ export default function Home() {
                       </span>
                     </div>
 
-                    <motion.div
+                    <m.div
                       whileHover={{ y: -8, scale: 1.015 }}
                       className={`timeline-card group flex min-h-[25rem] flex-col justify-between overflow-hidden rounded-lg border border-white/10 bg-white/[0.07] p-6 shadow-2xl ${item.glow} backdrop-blur-xl transition hover:border-purple-300/60 md:max-w-xl`}
                     >
@@ -2394,8 +2411,8 @@ export default function Home() {
                           </span>
                         </div>
                       </div>
-                    </motion.div>
-                  </motion.article>
+                    </m.div>
+                  </m.article>
                 ))}
               </div>
             </div>
@@ -2435,7 +2452,7 @@ export default function Home() {
                     {courseworkCategories.map((category, index) => {
                       const Icon = category.icon;
                       return (
-                        <motion.article
+                        <m.article
                           key={category.title}
                           initial={{ opacity: 0, y: 26 }}
                           whileInView={{ opacity: 1, y: 0 }}
@@ -2517,7 +2534,7 @@ export default function Home() {
                               ))}
                             </div>
                           </div>
-                        </motion.article>
+                        </m.article>
                       );
                     })}
                   </div>
@@ -2532,7 +2549,7 @@ export default function Home() {
           className={`tech-stack-section relative isolate overflow-hidden border-y py-24 lg:py-28 ${theme === "light" ? "tech-stack-light border-slate-200 bg-[#f7f9fd]" : "border-white/[0.06] bg-[#050a16]"}`}
         >
           <div className="tech-grid-background pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
@@ -2542,7 +2559,7 @@ export default function Home() {
             <p className="tech-stack-eyebrow">Tech Stack</p>
             <h2 className="tech-stack-title">Technologies <span>I Work With</span></h2>
             <p className="tech-stack-subtitle">A focused toolkit that powers my software engineering and product development journey.</p>
-          </motion.div>
+          </m.div>
 
           <div className="mx-auto mt-14 grid max-w-7xl grid-cols-1 gap-3 px-4 md:px-6 lg:grid-cols-12">
             {skillCategories.map((category, index) => (
@@ -2564,10 +2581,8 @@ export default function Home() {
               boxShadow: `0 24px 90px ${internshipTheme.primary}10`,
             }}
           >
-            <motion.div
+            <div
               aria-hidden="true"
-              animate={{ backgroundPosition: ["0px 0px", "54px 54px"] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.045)_1px,transparent_1px)] bg-[size:54px_54px] opacity-60"
             />
             <div className="pointer-events-none absolute -left-24 top-10 size-72 rounded-full blur-3xl" style={{ background: `${internshipTheme.primary}14` }} />
@@ -2587,7 +2602,7 @@ export default function Home() {
                 const active = activeInternshipIndex === index;
 
                 return (
-                  <motion.button
+                  <m.button
                     key={item.title}
                     type="button"
                     onClick={() => setActiveInternshipIndex(index)}
@@ -2595,7 +2610,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     whileHover={{ y: -5, scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
-                    viewport={{ once: false, amount: 0.35 }}
+                    viewport={{ once: true, amount: 0.35 }}
                     transition={{ duration: 0.28, delay: index * 0.06 }}
                     className="group relative overflow-hidden rounded-lg border p-4 text-left backdrop-blur-xl"
                     style={{
@@ -2615,12 +2630,12 @@ export default function Home() {
                         <span className="mt-2 block text-sm font-semibold text-slate-400">{item.organization}</span>
                       </span>
                     </div>
-                  </motion.button>
+                  </m.button>
                 );
               })}
             </div>
 
-            <motion.div
+            <m.div
               key={activeInternship.title}
               initial={{ opacity: 0, y: 18, x: 10 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
@@ -2664,7 +2679,7 @@ export default function Home() {
                         <h4 className="font-serif text-xl font-black text-slate-100">{internshipTheme.contributionTitle}</h4>
                         <ul className="mt-4 space-y-2.5 text-sm leading-7 text-slate-300">
                           {(activeInternship.work ?? []).slice(0, 3).map((point, pointIndex) => (
-                            <motion.li
+                            <m.li
                               key={point}
                               initial={{ opacity: 0, x: -8 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -2673,7 +2688,7 @@ export default function Home() {
                             >
                               <span className="mt-2.5 size-2 shrink-0 rounded-full" style={{ background: internshipTheme.primary }} />
                               <span>{point}</span>
-                            </motion.li>
+                            </m.li>
                           ))}
                         </ul>
                       </div>
@@ -2681,7 +2696,7 @@ export default function Home() {
                         <h4 className="font-serif text-xl font-black text-slate-100">{internshipTheme.growthTitle}</h4>
                         <ul className="mt-4 space-y-2.5 text-sm leading-7 text-slate-300">
                           {activeInternship.learning.slice(0, 3).map((point, pointIndex) => (
-                            <motion.li
+                            <m.li
                               key={point}
                               initial={{ opacity: 0, x: 8 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -2690,7 +2705,7 @@ export default function Home() {
                             >
                               <span className="mt-2.5 size-2 shrink-0 rounded-full" style={{ background: internshipTheme.primary }} />
                               <span>{point}</span>
-                            </motion.li>
+                            </m.li>
                           ))}
                         </ul>
                       </div>
@@ -2705,7 +2720,7 @@ export default function Home() {
                             ? ["Risk Review", "Defensive Analysis"]
                             : ["Application Flow", "API Concepts"]),
                         ].map((skill, skillIndex) => (
-                          <motion.span
+                          <m.span
                             key={skill}
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -2720,7 +2735,7 @@ export default function Home() {
                             whileHover={{ boxShadow: `0 0 20px ${internshipTheme.primary}33` }}
                           >
                             {skill}
-                          </motion.span>
+                          </m.span>
                         ))}
                       </div>
                     </div>
@@ -2729,18 +2744,12 @@ export default function Home() {
                   <div className="self-start xl:sticky xl:top-24">
                     <div>
                       <p className="mb-3 text-xs font-black uppercase tracking-[0.24em]" style={{ color: internshipTheme.primary }}>{internshipTheme.label}</p>
-                      <motion.a
+                      <m.a
                         href={activeInternship.proofUrl}
                         target="_blank"
                         rel="noreferrer"
-                        animate={{ y: [0, -5, 0] }}
-                        whileHover={{ y: -8, scale: 1.04, rotateX: 3, rotateY: -3 }}
-                        transition={{
-                          y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                          scale: { duration: 0.22 },
-                          rotateX: { duration: 0.22 },
-                          rotateY: { duration: 0.22 },
-                        }}
+                        whileHover={{ y: -4, scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
                         className="group relative block w-full max-w-full overflow-hidden rounded-lg border bg-white shadow-2xl"
                         style={{
                           borderColor: `${internshipTheme.primary}4d`,
@@ -2751,20 +2760,19 @@ export default function Home() {
                         <div className="pointer-events-none absolute inset-0 z-10 rounded-lg ring-1 transition" style={{ boxShadow: `inset 0 0 0 1px ${internshipTheme.primary}33` }} />
                         <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-transparent via-white/0 to-white/25 opacity-0 transition duration-300 group-hover:opacity-100" />
                         {activeInternshipIsCyber ? (
-                          <motion.div
+                          <div
                             aria-hidden="true"
-                            className="pointer-events-none absolute inset-x-0 z-20 h-16 bg-gradient-to-b from-transparent via-emerald-300/15 to-transparent"
-                            animate={{ top: ["-20%", "105%"] }}
-                            transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
+                            className="pointer-events-none absolute inset-x-0 top-0 z-20 h-16 bg-gradient-to-b from-transparent via-emerald-300/10 to-transparent"
                           />
                         ) : null}
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={activeInternship.previewUrl}
                           alt={`${activeInternship.title} certificate preview`}
+                          loading="lazy"
+                          decoding="async"
                           className="max-h-[32rem] w-full max-w-full object-contain transition duration-300 group-hover:brightness-105"
                         />
-                      </motion.a>
+                      </m.a>
                     </div>
 
                     <div className="mt-4 grid grid-cols-2 gap-3">
@@ -2785,16 +2793,14 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-            </motion.div>
+            </m.div>
           </div>
         </section>
 
         <section id="projects" className="mx-auto max-w-7xl px-4 py-24 md:px-6">
           <div className="relative overflow-hidden rounded-lg border border-slate-400/15 bg-[linear-gradient(180deg,#020617,#07192f,#0b1220)] p-5 shadow-2xl shadow-cyan-950/20 md:p-8">
-            <motion.div
+            <div
               aria-hidden="true"
-              animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] opacity-50"
             />
             <div className="pointer-events-none absolute -left-28 top-12 size-80 rounded-full bg-cyan-400/10 blur-3xl" />
@@ -2815,7 +2821,7 @@ export default function Home() {
                   const active = projectFilter === filter;
                   const accent = projectFilterAccent[filter];
                   return (
-                    <motion.button
+                    <m.button
                       key={filter}
                       type="button"
                       onClick={() => setProjectFilter(filter)}
@@ -2829,7 +2835,7 @@ export default function Home() {
                       }}
                     >
                       {filter}
-                    </motion.button>
+                    </m.button>
                   );
                 })}
               </div>
@@ -2837,11 +2843,11 @@ export default function Home() {
 
             <div className="relative mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {visibleProjects.map((project, index) => (
-                <motion.article
+                <m.article
                   key={project.title}
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.18 }}
+                  viewport={{ once: true, amount: 0.18 }}
                   transition={{ duration: 0.32, delay: index * 0.035 }}
                   whileHover={{ y: -8 }}
                   className={`group flex min-w-0 h-full flex-col overflow-hidden rounded-[22px] border bg-[rgba(15,23,42,0.85)] shadow-xl backdrop-blur-xl transition ${index === 0 ? "project-card-featured" : ""}`}
@@ -2890,7 +2896,7 @@ export default function Home() {
                       <ProjectModal project={project} />
                     </div>
                   </div>
-                </motion.article>
+                </m.article>
               ))}
             </div>
           </div>
@@ -2932,14 +2938,14 @@ export default function Home() {
                 const isActive = certificateFilter === filter;
 
                 return (
-                  <motion.button
+                  <m.button
                     key={filter}
                     type="button"
                     onClick={() => openCertificateDomain(domain)}
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0, rotate: 0 }}
                     whileHover={{ y: -5, scale: 1.018 }}
-                    viewport={{ once: false, amount: 0.25 }}
+                    viewport={{ once: true, amount: 0.25 }}
                     transition={{ duration: 0.32, delay: index * 0.025 }}
                     className="group relative min-h-44 overflow-hidden rounded-lg border p-4 text-left shadow-xl backdrop-blur-xl"
                     style={{
@@ -2964,12 +2970,12 @@ export default function Home() {
                         <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{certificates.find((certificate) => certificate.domain === domain)?.skills}</p>
                       </div>
                     </div>
-                  </motion.button>
+                  </m.button>
                 );
               })}
             </div>
 
-            <motion.div
+            <m.div
               ref={certificateViewerRef}
               initial={{ opacity: 0, y: 34 }}
               animate={{ opacity: 1, y: 0 }}
@@ -2988,7 +2994,7 @@ export default function Home() {
                   <h3 className="mt-2 font-serif text-3xl font-black text-white md:text-4xl">{certificateFilter}</h3>
                 </div>
                 <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/20 p-1.5">
-                  <motion.button
+                  <m.button
                     type="button"
                     onClick={showPreviousCertificate}
                     whileTap={{ scale: 0.94 }}
@@ -3002,7 +3008,7 @@ export default function Home() {
                   >
                     <ChevronLeft size={17} />
                     Previous
-                  </motion.button>
+                  </m.button>
                   <span
                     className="rounded-md px-4 py-2 text-sm font-black text-slate-950"
                     style={{
@@ -3012,7 +3018,7 @@ export default function Home() {
                   >
                     {certificateIndex + 1} / {visibleCertificates.length}
                   </span>
-                  <motion.button
+                  <m.button
                     type="button"
                     onClick={showNextCertificate}
                     whileTap={{ scale: 0.94 }}
@@ -3026,27 +3032,28 @@ export default function Home() {
                   >
                     Next
                     <ChevronRight size={17} />
-                  </motion.button>
+                  </m.button>
                 </div>
               </div>
 
               <div className="grid items-stretch gap-5 lg:grid-cols-[1.04fr_0.96fr]">
-                <motion.div
+                <m.div
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.18 }}
                   className="relative flex min-h-full items-center justify-center overflow-visible"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     key={activeCertificate.file}
                     src={activeCertificate.previewUrl}
                     alt={`${activeCertificate.name} certificate preview`}
+                    loading="lazy"
+                    decoding="async"
                     className="block max-h-[34rem] max-w-full rounded-sm bg-white object-contain shadow-2xl"
                     style={{ boxShadow: `0 18px 52px ${activeCertificate.accent}18` }}
                   />
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.18 }}
                   className="flex min-h-full flex-col justify-center rounded-lg border bg-[linear-gradient(145deg,rgba(255,255,255,0.075),rgba(255,255,255,0.035))] p-6 shadow-xl"
@@ -3070,7 +3077,7 @@ export default function Home() {
                   </div>
 
                   <div className="mt-7 flex flex-wrap gap-3">
-                    <motion.a
+                    <m.a
                       href={activeCertificate.url}
                       target="_blank"
                       rel="noreferrer"
@@ -3084,8 +3091,8 @@ export default function Home() {
                     >
                       <ExternalLink size={17} />
                       View Certificate
-                    </motion.a>
-                    <motion.a
+                    </m.a>
+                    <m.a
                       href={activeCertificate.url}
                       download
                       whileTap={{ scale: 0.97 }}
@@ -3098,20 +3105,18 @@ export default function Home() {
                     >
                       <Download size={17} />
                       Download PDF
-                    </motion.a>
+                    </m.a>
                   </div>
-                </motion.div>
+                </m.div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </section>
 
         <section id="achievements" className="mx-auto max-w-7xl px-4 py-24 md:px-6">
           <div className="relative overflow-hidden rounded-lg border border-amber-300/30 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,.12),transparent_35%),linear-gradient(135deg,#020617,#1c1305,#111827)] p-5 shadow-2xl shadow-amber-950/20 md:p-8">
-            <motion.div
+            <div
               aria-hidden="true"
-              animate={{ backgroundPosition: ["0px 0px", "54px 54px"] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(251,191,36,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(245,158,11,0.045)_1px,transparent_1px)] bg-[size:54px_54px] opacity-55"
             />
             <Trophy className="pointer-events-none absolute -right-6 top-2 text-amber-200/5" size={250} />
@@ -3133,7 +3138,7 @@ export default function Home() {
                 const active = activeAchievementIndex === index;
 
                 return (
-                  <motion.button
+                  <m.button
                     key={item.title}
                     type="button"
                     onClick={() => setActiveAchievementIndex(index)}
@@ -3141,7 +3146,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     whileHover={{ y: -5, scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
-                    viewport={{ once: false, amount: 0.35 }}
+                    viewport={{ once: true, amount: 0.35 }}
                     transition={{ duration: 0.28, delay: index * 0.06 }}
                     className="group relative overflow-hidden rounded-lg border p-4 text-left backdrop-blur-xl"
                     style={{
@@ -3161,12 +3166,12 @@ export default function Home() {
                         <span className="mt-2 block text-sm font-semibold text-slate-400">{item.organization}</span>
                       </span>
                     </div>
-                  </motion.button>
+                  </m.button>
                 );
               })}
             </div>
 
-            <motion.div
+            <m.div
               key={activeAchievement.title}
               initial={{ opacity: 0, y: 18, x: 10 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
@@ -3216,7 +3221,7 @@ export default function Home() {
                     <p className="text-xs font-black uppercase tracking-[0.22em] text-slate-500">Skills Demonstrated</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {(activeAchievement.stack ?? []).map((skill, skillIndex) => (
-                        <motion.span
+                        <m.span
                           key={skill}
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -3226,7 +3231,7 @@ export default function Home() {
                           style={{ borderColor: `${activeAchievement.accent}40`, background: `${activeAchievement.accent}17` }}
                         >
                           {skill}
-                        </motion.span>
+                        </m.span>
                       ))}
                     </div>
                   </div>
@@ -3235,30 +3240,25 @@ export default function Home() {
                 <div className="self-start xl:sticky xl:top-24">
                   <div>
                     <p className="mb-3 text-xs font-black uppercase tracking-[0.24em]" style={{ color: activeAchievement.accent }}>Achievement Proof</p>
-                    <motion.a
+                    <m.a
                       href={activeAchievement.proofUrl}
                       target="_blank"
                       rel="noreferrer"
-                      animate={{ y: [0, -5, 0] }}
-                      whileHover={{ y: -8, scale: 1.04, rotateX: 3, rotateY: -3 }}
-                      transition={{
-                        y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                        scale: { duration: 0.22 },
-                        rotateX: { duration: 0.22 },
-                        rotateY: { duration: 0.22 },
-                      }}
+                      whileHover={{ y: -4, scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
                       className="group relative block w-full max-w-full overflow-hidden rounded-lg border bg-white shadow-2xl"
                       style={{ borderColor: `${activeAchievement.accent}4d`, boxShadow: `0 0 40px ${activeAchievement.accent}24` }}
                     >
                       <div className="pointer-events-none absolute inset-0 z-10 rounded-lg ring-1 ring-amber-100/20 transition group-hover:ring-amber-200/80" />
                       <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-transparent via-white/0 to-white/25 opacity-0 transition duration-300 group-hover:opacity-100" />
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={activeAchievement.previewUrl}
                         alt={`${activeAchievement.title} verification preview`}
+                        loading="lazy"
+                        decoding="async"
                         className="max-h-[32rem] w-full max-w-full object-contain transition duration-300 group-hover:brightness-105"
                       />
-                    </motion.a>
+                    </m.a>
                   </div>
 
                   <div className="mt-4 grid grid-cols-2 gap-3">
@@ -3275,7 +3275,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </section>
 
@@ -3293,7 +3293,7 @@ export default function Home() {
           />
 
           <div className="mx-auto max-w-7xl">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
@@ -3305,10 +3305,10 @@ export default function Home() {
               <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-400 md:text-lg">
                 A concise overview of my education, projects, technical skills, certifications, and professional growth.
               </p>
-            </motion.div>
+            </m.div>
 
             <div className="mt-14 grid items-stretch justify-center gap-6 lg:grid-cols-[minmax(0,48rem)_minmax(0,40rem)]">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
@@ -3343,7 +3343,7 @@ export default function Home() {
 
                 <div className="resume-preview-frame no-scrollbar mt-5 flex flex-1 justify-center overflow-hidden bg-transparent">
                   <Image
-                    src="/resume-preview.png"
+                    src="/resume-preview.webp"
                     alt="Sakthi Sri Santh M resume preview"
                     width={1489}
                     height={2106}
@@ -3351,9 +3351,9 @@ export default function Home() {
                     className="h-auto max-h-[34rem] w-auto max-w-full rounded-lg bg-white object-contain shadow-[0_18px_50px_rgba(0,0,0,.28)]"
                   />
                 </div>
-              </motion.div>
+              </m.div>
 
-              <motion.aside
+              <m.aside
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
@@ -3374,7 +3374,7 @@ export default function Home() {
                 </p>
 
                 <div className="mt-8 grid gap-3.5">
-                  <motion.a
+                  <m.a
                     href="/Resume.pdf"
                     target="_blank"
                     rel="noreferrer"
@@ -3383,8 +3383,8 @@ export default function Home() {
                   >
                     <span className="flex items-center gap-3"><Eye size={19} className="text-cyan-200" />View Resume</span>
                     <ExternalLink size={17} className="opacity-60 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
-                  </motion.a>
-                  <motion.a
+                  </m.a>
+                  <m.a
                     href="/Resume.pdf"
                     download="Sakthi-Sri-Santh-M-Resume.pdf"
                     whileHover={{ y: -3 }}
@@ -3392,8 +3392,8 @@ export default function Home() {
                   >
                     <span className="flex items-center gap-3"><Download size={19} className="text-purple-200" />Download PDF</span>
                     <ChevronRight size={17} className="opacity-60 transition group-hover:translate-x-1 group-hover:opacity-100" />
-                  </motion.a>
-                  <motion.button
+                  </m.a>
+                  <m.button
                     type="button"
                     onClick={handlePrintResume}
                     whileHover={{ y: -3 }}
@@ -3401,13 +3401,13 @@ export default function Home() {
                   >
                     <span className="flex items-center gap-3"><Printer size={19} className="text-slate-300" />Print Resume</span>
                     <ChevronRight size={17} className="opacity-60 transition group-hover:translate-x-1 group-hover:opacity-100" />
-                  </motion.button>
+                  </m.button>
                 </div>
 
                 <p className="mt-6 border-t border-white/10 pt-5 text-sm leading-6 text-slate-500">
                   Available as a verified PDF for quick review, download, and printing.
                 </p>
-              </motion.aside>
+              </m.aside>
             </div>
           </div>
         </section>
@@ -3426,7 +3426,7 @@ export default function Home() {
           />
 
           <div className="mx-auto max-w-7xl">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
@@ -3438,10 +3438,10 @@ export default function Home() {
               <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-400 md:text-lg">
                 Reach out for internships, software engineering opportunities, project collaboration, or technical discussions.
               </p>
-            </motion.div>
+            </m.div>
 
             <div className="mt-14 grid items-stretch gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: -28 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
@@ -3450,7 +3450,7 @@ export default function Home() {
               >
                 <div className="flex items-center gap-3">
                   <span className="relative block size-11 overflow-hidden rounded-lg border border-cyan-300/25 bg-white">
-                    <Image src={skillAsset("08_55_59")} alt="Email" fill sizes="44px" className="object-cover" />
+                    <img src={skillIcon("Email")} alt="Email" className="size-full object-contain p-1.5" />
                   </span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">Contact Information</p>
@@ -3463,7 +3463,7 @@ export default function Home() {
 
                 <div className="mt-7 divide-y divide-white/10 border-y border-white/10">
                   {contactLinks.map(({ label, value, image, href, external }, index) => (
-                    <motion.a
+                    <m.a
                       key={label}
                       href={href}
                       target={external ? "_blank" : undefined}
@@ -3483,12 +3483,12 @@ export default function Home() {
                         <span className="mt-1 block break-words text-sm font-medium text-slate-200 md:text-base">{value}</span>
                       </span>
                       <ExternalLink size={17} className="shrink-0 text-slate-600 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-300" />
-                    </motion.a>
+                    </m.a>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: 28 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
@@ -3539,7 +3539,7 @@ export default function Home() {
                       placeholder="Write your message..."
                     />
                   </label>
-                  <motion.button
+                  <m.button
                     type="submit"
                     whileHover={{ y: -3 }}
                     whileTap={{ scale: 0.98 }}
@@ -3547,9 +3547,9 @@ export default function Home() {
                   >
                     <Send size={18} />
                     Send Message
-                  </motion.button>
+                  </m.button>
                 </form>
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </section>
@@ -3570,7 +3570,7 @@ export default function Home() {
             <div>
               <a href="#home" className="group relative block h-12 w-[190px] overflow-hidden" aria-label="Sakthi.dev home">
                 <Image
-                  src={theme === "dark" ? "/logo-dark.png" : "/logo-light.png"}
+                  src={theme === "dark" ? "/logo-dark.webp" : "/logo-light.webp"}
                   alt="Sakthi.dev"
                   fill
                   sizes="190px"
@@ -3600,11 +3600,11 @@ export default function Home() {
               <p className="text-xs font-black uppercase tracking-[0.24em] text-purple-300">Connect</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 {[
-                  { label: "GitHub", href: "https://github.com/sakthisrisanth98", image: skillAsset("08_55_24") },
-                  { label: "LinkedIn", href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290", image: linkedinAsset },
-                  { label: "Telegram", href: "https://t.me/sakthisrisanth", image: skillAsset("08_55_43") },
-                  { label: "LeetCode", href: "https://leetcode.com/u/sakthisrisanth98", image: skillAsset("08_55_37") },
-                  { label: "Email", href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com", image: skillAsset("08_55_59") },
+                  { label: "GitHub", href: "https://github.com/sakthisrisanth98", image: skillIcon("GitHub") },
+                  { label: "LinkedIn", href: "https://linkedin.com/in/sakthi-sri-santh-m-416540290", image: skillIcon("LinkedIn") },
+                  { label: "Telegram", href: "https://t.me/sakthisrisanth", image: skillIcon("Telegram") },
+                  { label: "LeetCode", href: "https://leetcode.com/u/sakthisrisanth98", image: skillIcon("LeetCode") },
+                  { label: "Email", href: "https://mail.google.com/mail/?view=cm&fs=1&to=sakthisrisanth98%40gmail.com", image: skillIcon("Email") },
                 ].map(({ label, href, image }) => (
                   <a
                     key={label}
@@ -3615,7 +3615,7 @@ export default function Home() {
                     title={label}
                     className="group relative size-11 overflow-hidden rounded-lg border border-white/10 bg-white transition hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_0_22px_rgba(34,211,238,.15)]"
                   >
-                    <Image src={image} alt="" fill sizes="44px" className="object-cover transition group-hover:scale-105" />
+                    <img src={image} alt="" className="size-full object-contain p-1.5 transition group-hover:scale-105" loading="lazy" decoding="async" />
                   </a>
                 ))}
               </div>
@@ -3670,7 +3670,7 @@ export default function Home() {
                 [String(internships.length), "Internships", BriefcaseBusiness, "text-emerald-300"],
                 ["8.02", "Current CGPA", GraduationCap, "text-amber-300"],
               ].map(([value, label, Icon, tone]) => (
-                <motion.div
+                <m.div
                   key={label as string}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -3684,7 +3684,7 @@ export default function Home() {
                     <p className="text-3xl font-black leading-none text-white md:text-4xl">{value as string}</p>
                   </div>
                   <p className="mt-4 text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">{label as string}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
 
@@ -3748,5 +3748,6 @@ export default function Home() {
         </Dialog.Portal>
       </Dialog.Root>
     </main>
+    </LazyMotion>
   );
 }
